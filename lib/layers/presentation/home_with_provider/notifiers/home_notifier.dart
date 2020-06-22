@@ -1,7 +1,7 @@
-import 'package:clean_arch_flutter/layers/domain/usecases/get_all_characters.dart';
 import 'package:flutter/foundation.dart';
 
-import 'home_model.dart';
+import '../../../domain/entities/character.dart';
+import '../../../domain/usecases/get_all_characters.dart';
 
 class HomeNotifier with ChangeNotifier {
   final GetAllCharacters _getAllCharacters;
@@ -10,13 +10,13 @@ class HomeNotifier with ChangeNotifier {
     @required GetAllCharacters getAllCharacters,
   }) : _getAllCharacters = getAllCharacters;
 
-  // TODO: Remove model and use ChangeNotifer directly?
-  var _model = HomeModel(isLoading: false, charactersList: null, error: null);
-  HomeModel get homeModel => _model;
+  bool isLoading = false;
+  List<Character> charactersList;
+  String error;
 
   Future<void> loadAllCharacters() async {
     // show loading
-    _model = _model.copyWith(isLoading: true);
+    isLoading = true;
     notifyListeners();
 
     // Fetch the list
@@ -24,11 +24,14 @@ class HomeNotifier with ChangeNotifier {
 
     // Handle success or error
     result.fold(
-      (e) => _model = _model.copyWith(error: "Fail", isLoading: false),
-      (list) => _model = _model.copyWith(
-        charactersList: list,
-        isLoading: false,
-      ),
+      (e) {
+        error = "fail";
+        isLoading = false;
+      },
+      (list) {
+        charactersList = list;
+        isLoading = false;
+      },
     );
 
     // notify UI

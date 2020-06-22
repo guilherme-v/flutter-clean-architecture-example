@@ -10,6 +10,7 @@ class HomeViewModel {
     @required GetAllCharacters getAllCharacters,
   }) : this._getAllCharacters = getAllCharacters;
 
+  // bool isLoading = false; // * No need to loading
   List<Character> charList;
   String error;
 

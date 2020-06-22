@@ -29,9 +29,9 @@ class _HomePageState extends State<HomePageWithProvider> {
   }
 
   Widget _showBody() {
-    final isLoading = context.select((HomeNotifier n) => n.homeModel.isLoading);
-    final error = context.select((HomeNotifier n) => n.homeModel.error);
-    final list = context.select((HomeNotifier n) => n.homeModel.charactersList);
+    final isLoading = context.select((HomeNotifier n) => n.isLoading);
+    final error = context.select((HomeNotifier n) => n.error);
+    final list = context.select((HomeNotifier n) => n.charactersList);
 
     if (!isLoading && list == null) {
       return _showLoadButton();

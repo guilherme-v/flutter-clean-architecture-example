@@ -5,7 +5,9 @@ import 'package:states_rebuilder/states_rebuilder.dart';
 
 import 'injection_container.dart' as di;
 import 'layers/presentation/home_with_bloc/bloc/home_bloc.dart';
+import 'layers/presentation/home_with_bloc/pages/home_page.dart';
 import 'layers/presentation/home_with_provider/notifiers/home_notifier.dart';
+import 'layers/presentation/home_with_provider/pages/home_page_with_provider.dart';
 import 'layers/presentation/home_with_states_rebuilder/model/home_view_model.dart';
 import 'layers/presentation/home_with_states_rebuilder/pages/home_page_with_state_rebuilder.dart';
 
@@ -48,8 +50,8 @@ class MyApp extends StatelessWidget {
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
             // home: HomePage(), // BLOC version
-            // home: HomePageWithProvider(), // plain provider Version
-            home: HomePageWithStatesRebuilder(), // StateRebuilder Version
+            home: HomePageWithProvider(), // plain provider Version
+            // home: HomePageWithStatesRebuilder(), // StateRebuilder Version
           ),
         ),
       ),
