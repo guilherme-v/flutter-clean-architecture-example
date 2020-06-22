@@ -1,4 +1,5 @@
 import 'package:clean_arch_flutter/layers/presentation/home_with_provider/notifiers/home_notifier.dart';
+import 'package:clean_arch_flutter/layers/presentation/home_with_states_rebuilder/model/home_view_model.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
@@ -21,9 +22,18 @@ Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // * Presenter Layer
-  sl.registerFactory(() => HomeBloc(getAllCharacters: sl())); // to BLOC version
+  // to BLOC version
   sl.registerFactory(
-      () => HomeNotifier(getAllCharacters: sl())); // to plain Provider version
+    () => HomeBloc(getAllCharacters: sl()),
+  );
+  // to plain Provider version
+  sl.registerFactory(
+    () => HomeNotifier(getAllCharacters: sl()),
+  );
+  // to StateRebuilder version
+  sl.registerFactory(
+    () => HomeViewModel(getAllCharacters: sl()),
+  );
 
   // * Domain Layer
   sl.registerFactory(() => GetAllCharacters(charactersRepository: sl()));

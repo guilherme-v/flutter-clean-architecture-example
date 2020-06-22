@@ -10,6 +10,7 @@ class HomeNotifier with ChangeNotifier {
     @required GetAllCharacters getAllCharacters,
   }) : _getAllCharacters = getAllCharacters;
 
+  // TODO: Remove model and use ChangeNotifer directly?
   var _model = HomeModel(isLoading: false, charactersList: null, error: null);
   HomeModel get homeModel => _model;
 

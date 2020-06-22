@@ -252,6 +252,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.9.3"
+  states_rebuilder:
+    dependency: "direct main"
+    description:
+      name: states_rebuilder
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
   stream_channel:
     dependency: transitive
     description:
