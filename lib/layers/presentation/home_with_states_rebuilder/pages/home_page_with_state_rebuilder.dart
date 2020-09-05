@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePageWithStatesRebuilder> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("RickAndMorty"),
+        title: Text("RickAndMorty - StateRebuilder"),
       ),
       body: Center(
         child: Container(

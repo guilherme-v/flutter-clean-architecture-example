@@ -16,7 +16,7 @@ class _HomePageWithBlocState extends State<HomePageWithBloc> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("RickAndMorty"),
+        title: Text("RickAndMorty - Bloc"),
       ),
       body: Center(
         child: Container(

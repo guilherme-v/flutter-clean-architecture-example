@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePageWithProvider> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("RickAndMorty"),
+        title: Text("RickAndMorty - Provider"),
       ),
       body: Center(
         child: Container(
