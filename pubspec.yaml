@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.8.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -43,6 +43,10 @@ dependencies:
   # Network
   data_connection_checker: ^0.3.4
   http: ^0.12.1
+  flutter_stetho: # https://github.com/brianegan/flutter_stetho/issues/15
+    git:
+      url: https://github.com/Zfinix/flutter_stetho
+      ref: e36c78a104171663d8c3c22c14bde264ca50bec7
 
   # Others State Management
   provider: ^4.1.3
