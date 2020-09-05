@@ -6,20 +6,27 @@ import '../../domain/entities/character.dart';
 import '../../domain/repositories/character_repository.dart';
 import '../datasources/character_local_datasource.dart';
 import '../datasources/character_network_datasource.dart';
+import '../memory/in_memory_cache.dart';
 
 class CharacterRepositoryImpl implements CharacterRepository {
   final NetworkInfo networkInfo;
   final CharacterLocalDatasource localDatasource;
   final CharacterNetworkDatasource networkDatasource;
+  final InMemoryCache inMemoryCache;
 
   CharacterRepositoryImpl({
     this.networkInfo,
     this.localDatasource,
     this.networkDatasource,
+    this.inMemoryCache,
   });
 
   @override
   Future<Either<Failure, List<Character>>> getAllCharacters() async {
+    if (inMemoryCache.isNotEmpty && inMemoryCache.hasNotExpired) {
+      return Right(inMemoryCache.getCachedValue());
+    }
+
     return await networkInfo.isConnected
         ? _getAllCharactersFromNetwork()
         : _getAllCharactersFromLocalCache();
@@ -30,6 +37,7 @@ class CharacterRepositoryImpl implements CharacterRepository {
     try {
       final allCharactersList = await networkDatasource.getAllCharacters();
       await localDatasource.cacheCharacterList(allCharactersList);
+      inMemoryCache.save(allCharactersList);
       return Right(allCharactersList);
     } catch (e) {
       return Left(e);
@@ -40,6 +48,7 @@ class CharacterRepositoryImpl implements CharacterRepository {
       _getAllCharactersFromLocalCache() async {
     try {
       final allCharactersList = await localDatasource.getAllCharacters();
+      inMemoryCache.save(allCharactersList);
       return Right(allCharactersList);
     } catch (e) {
       return Left(e);

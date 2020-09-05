@@ -1,5 +1,4 @@
-import 'package:clean_arch_flutter/layers/presentation/home_with_provider/notifiers/home_notifier.dart';
-import 'package:clean_arch_flutter/layers/presentation/home_with_states_rebuilder/model/home_view_model.dart';
+import 'package:clean_arch_flutter/layers/data/memory/in_memory_cache.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
@@ -15,6 +14,8 @@ import 'layers/domain/usecases/get_all_characters.dart';
 import 'layers/local/datasources/character_local_datasource_impl.dart';
 import 'layers/network/datasources/character_network_datasource_impl.dart';
 import 'layers/presentation/home_with_bloc/bloc/home_bloc.dart';
+import 'layers/presentation/home_with_provider/notifiers/home_notifier.dart';
+import 'layers/presentation/home_with_states_rebuilder/model/home_view_model.dart';
 
 final sl = GetIt.instance;
 
@@ -39,8 +40,15 @@ Future<void> init() async {
   sl.registerFactory(() => GetAllCharacters(charactersRepository: sl()));
 
   // * Data Layer
-  sl.registerFactory<CharacterRepository>(() => CharacterRepositoryImpl(
-      localDatasource: sl(), networkDatasource: sl(), networkInfo: sl()));
+  sl.registerLazySingleton<CharacterRepository>(
+    () => CharacterRepositoryImpl(
+      localDatasource: sl(),
+      networkDatasource: sl(),
+      networkInfo: sl(),
+      inMemoryCache: sl(),
+    ),
+  );
+  sl.registerFactory(() => InMemoryCache());
 
   // * Network Layer
   sl.registerFactory<CharacterNetworkDatasource>(
