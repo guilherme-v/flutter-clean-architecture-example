@@ -1,4 +1,7 @@
-part of 'home_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
+
+import '../../../domain/entities/character.dart';
 
 abstract class HomeState extends Equatable {
   const HomeState();

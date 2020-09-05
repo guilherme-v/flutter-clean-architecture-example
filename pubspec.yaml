@@ -28,8 +28,8 @@ dependencies:
   get_it: ^4.0.2
   
   # BLOC state management on Presentation layer
-  bloc: ^4.0.0
-  flutter_bloc: ^4.0.0
+  bloc: ^6.0.0
+  flutter_bloc: ^6.0.0
   
   # Object equality by values instead of Dart's default referential equality
   equatable: ^1.2.0

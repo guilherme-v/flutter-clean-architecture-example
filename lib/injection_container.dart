@@ -24,7 +24,7 @@ Future<void> init() async {
   // * Presenter Layer
   // to BLOC version
   sl.registerFactory(
-    () => HomeBloc(getAllCharacters: sl()),
+    () => HomeCubit(getAllCharacters: sl()),
   );
   // to plain Provider version
   sl.registerFactory(

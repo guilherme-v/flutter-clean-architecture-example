@@ -5,7 +5,7 @@ import 'package:states_rebuilder/states_rebuilder.dart';
 
 import 'injection_container.dart' as di;
 import 'layers/presentation/home_with_bloc/bloc/home_bloc.dart';
-import 'layers/presentation/home_with_bloc/pages/home_page.dart';
+import 'layers/presentation/home_with_bloc/pages/home_page_with_bloc.dart';
 import 'layers/presentation/home_with_provider/notifiers/home_notifier.dart';
 import 'layers/presentation/home_with_provider/pages/home_page_with_provider.dart';
 import 'layers/presentation/home_with_states_rebuilder/model/home_view_model.dart';
@@ -31,8 +31,8 @@ class MyApp extends StatelessWidget {
       // * USED by BLOC version
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<HomeBloc>(
-            create: (BuildContext context) => di.sl<HomeBloc>(),
+          BlocProvider<HomeCubit>(
+            create: (BuildContext context) => di.sl<HomeCubit>(),
           ),
         ],
         // * USED by States Rebuilder version
@@ -49,8 +49,8 @@ class MyApp extends StatelessWidget {
               // closer together (more dense) than on mobile platforms.
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            // home: HomePage(), // BLOC version
-            home: HomePageWithProvider(), // plain provider Version
+            home: HomePageWithBloc(), // BLOC version
+            // home: HomePageWithProvider(), // plain provider Version
             // home: HomePageWithStatesRebuilder(), // StateRebuilder Version
           ),
         ),

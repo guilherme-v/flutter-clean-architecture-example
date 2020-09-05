@@ -4,14 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/home_bloc.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key key}) : super(key: key);
+class HomePageWithBloc extends StatefulWidget {
+  const HomePageWithBloc({Key key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageWithBlocState createState() => _HomePageWithBlocState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageWithBlocState extends State<HomePageWithBloc> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Container(
           color: Colors.white,
-          child: BlocConsumer<HomeBloc, HomeState>(
+          child: BlocConsumer<HomeCubit, HomeState>(
             listener: (context, state) {},
             builder: (context, state) {
               if (state is Initial) {
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _loadData() {
-    final bloc = context.bloc<HomeBloc>();
-    bloc.add(LoadButtonClickEvent());
+    final cubit = context.bloc<HomeCubit>();
+    cubit.showLoadingAndFetchCharacters();
   }
 }
