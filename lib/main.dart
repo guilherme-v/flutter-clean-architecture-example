@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stetho/flutter_stetho.dart';
 import 'package:provider/provider.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
@@ -12,6 +13,8 @@ import 'layers/presentation/home_with_states_rebuilder/model/home_view_model.dar
 import 'layers/presentation/home_with_states_rebuilder/pages/home_page_with_state_rebuilder.dart';
 
 void main() async {
+  Stetho.initialize();
+
   // Initialize the injection container
   await di.init();
 
