@@ -11,9 +11,15 @@
             "program": "./test/"
         },
         {
-            "name": "Flutter",
+            "name": "Flutter: Debug",
             "request": "launch",
             "type": "dart"
+        },
+        {
+            "name": "Flutter: Run Profile",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
         }
     ]
 }

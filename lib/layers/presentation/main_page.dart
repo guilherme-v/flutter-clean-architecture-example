@@ -1,7 +1,9 @@
-import 'package:clean_arch_flutter/layers/presentation/home_with_bloc/pages/home_page_with_bloc.dart';
-import 'package:clean_arch_flutter/layers/presentation/home_with_provider/pages/home_page_with_provider.dart';
-import 'package:clean_arch_flutter/layers/presentation/home_with_states_rebuilder/pages/home_page_with_state_rebuilder.dart';
 import 'package:flutter/material.dart';
+
+import 'home_with_bloc/pages/home_page_with_bloc.dart';
+import 'home_with_provider/pages/home_page_with_provider.dart';
+import 'home_with_state_notifier/pages/home_page_with_state_notifier.dart';
+import 'home_with_states_rebuilder/pages/home_page_with_state_rebuilder.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
@@ -12,11 +14,11 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
-
   static const List<Widget> _appPages = <Widget>[
     HomePageWithBloc(),
     HomePageWithProvider(),
     HomePageWithStatesRebuilder(),
+    HomePageWithStateNotifier()
   ];
 
   void _onItemTapped(int index) {
@@ -28,31 +30,41 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // use an IndexedStack to keep the state of all pages
-      // and to avoid rebuild them
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _appPages,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Bloc',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Provider',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'StatesRebulder',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
+        // use an IndexedStack to keep the state of all pages
+        // and to avoid rebuild them
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: _appPages,
+        ),
+        bottomNavigationBar: _buildBottomBar());
+  }
+
+  Widget _buildBottomBar() {
+    return BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        const BottomNavigationBarItem(
+          icon: const Icon(Icons.home),
+          label: 'Bloc',
+        ),
+        const BottomNavigationBarItem(
+          icon: const Icon(Icons.business),
+          label: 'Provider',
+        ),
+        const BottomNavigationBarItem(
+          icon: const Icon(Icons.school),
+          label: 'StatesRebulder',
+        ),
+        const BottomNavigationBarItem(
+          icon: const Icon(Icons.notifications_active),
+          label: 'StateNotifier',
+        ),
+      ],
+      showUnselectedLabels: true,
+      currentIndex: _selectedIndex,
+      selectedItemColor: Colors.black,
+      unselectedItemColor: Colors.grey.shade500,
+      type: BottomNavigationBarType.shifting,
+      onTap: _onItemTapped,
     );
   }
 }
