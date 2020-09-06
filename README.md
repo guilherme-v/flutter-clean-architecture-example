@@ -22,7 +22,7 @@ The architecture also follows the Dependency Rule, which states that an outer la
 - Feature toggle can be used easily, both to enable/disable features or to try out new ideas (without needing to release a new version).
 - All layers can be unit tested independently.
 - Unidirectional data flow makes it easy to understand the code.
-- We can use different State Managements libraries (Provider, BLOC, States Rebuilder, MobX...) on the Presentation layer or try out new ones easily
+- We can use different State Managements libraries (Provider, BLOC, States Rebuilder, State Notifier...) on the Presentation layer, or even try out new ones easily if needed
   
 # Details
 
@@ -36,24 +36,39 @@ The application user interface. It depends on the Flutter Framework containing c
 - Build the UI: like ``Widgets``, ``BuildContexts``, and others.
 - Hold the Presentation logic: ``ChangeNotifier``, ``BLOC``, ``ViewModels``, and others.
 
-The presentation logic will receive data from the Domain's use cases, it will then prepare these to be presented on the UI. In general, it is the recommended place to format/internationalize things. 
+The presentation logic will receive data from the Domain's use cases, and then it will prepare these data to be presented on the UI. In general, it is the recommended place to format/internationalize things. For example, it can receive from the Domain a ``DateTime`` object with the format ``"1969-07-20 20:18:04Z"`` and prepare/format this data to be presented on the UI according to the user's device language.
 
 ### Domain
 It represents the domain of the problem we are trying to solve, that is, your business rules. It is the architecture's central layer, therefore, it has no dependencies on external layers and should be a plain dart module. It includes:
 - plain entity classes (like ``Character`` entity)
 - usecase classes, that encapsulate all the business logic related to a particular usecase (like ``GetAllCharacters``, ``SignInUser``, and others...)
 - data access abstractions (Repository Interfaces)
+  
+A use-case has no clue if the data it'll receive comes from a memory cache, local storage, or the internet. All these details were abstract out by the use of the Repositories' Interfaces, and from the use-case point of view, all that matters is that it'll receive its data. 
 
 ### Data
 It is the layer that implements the data access abstractions (Repository Interfaces) defined into the domain. In other words, it is the layer responsible for providing data to those use cases. It is "the brain" that knows how/when to fetch data from the network or local cache, and how/when to cache things. It includes:
-- Implementations of repositories defined by domain layer
-- Data-source interfaces (like ``RemoteDatasourceInterface``, ``LocalCacheDatasourceInterface``)
+- It is the Implementations of repositories defined by domain layer
+- It'll hold/manage any in memory caches
+- It'll define Data-source abstractions (like ``RemoteDatasourceInterface``, ``LocalCacheDatasourceInterface``)
+  
+It works like a "boundary" between our application and the external world in a certain way. It will "translate" how things are "fetched" from/to the internet, or "loaded" from/to the database, to how these same things are represented in our Domain.
+
 
 ### Network
-Layer responsible for handle the communication to the network. It has the implementation of the remote abstraction (``RemoteDatasourceInterface``) defined into the Data layer.
+Layer responsible for handle the communication to the network. It has the implementation of the remote abstraction (``RemoteDatasourceInterface``) defined into the Data layer:
+- We define the endpoints we are going to use
+- We configure any interceptors we need
+- We serialize/deserialize the JSON to Data objects
 
-### Cache
+It represents a "boundary" with the external world. We are translating the "language" our API uses to communicate (JSON) to something that we can understand and work better (Data object).
+
+### Local
 This layer provides access to any kind of local storage: database, shared preferences, files, and others. It implements the abstractions (``LocalCacheDatasourceInterface``) defined into the Data layer.
+
+It represents a "boundary" with the inner world. I mean, how we store things in our local device. We can use shared-preferences' key-values, serialize/deserialize things into files, read/write from the database, etc. 
+
+The point is: Each method has its way to "save" and "read" things, and this layer will translate this way to objects that our Data Layer knows how to handle.
 
 
 # Generic Error Handling and Data Layer
