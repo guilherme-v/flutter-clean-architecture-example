@@ -1,3 +1,5 @@
+![app](./art/app.png?raw=true)
+
 # Flutter Clean Architecture Proposal
 
 # Goals
