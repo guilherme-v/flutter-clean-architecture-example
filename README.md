@@ -4,6 +4,7 @@
 - Keep code clean
 - Keep code testable
 - Keep codebase easily extensible and adaptable
+- Test different State Managaments libraries (currently: BLOC, Provider, States Rebuilder and State Notifier)
   
 
 # Architecture Overview
