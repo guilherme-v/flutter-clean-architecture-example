@@ -4,6 +4,7 @@
 - Update BLOC ``HomeState`` to use ``Cubit``
 - Allow HTTP ``request/response`` payload inspections using [Stetho](https://medium.com/@valiodas/flutter-inspecting-http-request-response-payloads-and-sharedpreferences-dbd3d0cc309e)
 - Update ``CharacterRepositoryImpl`` to use ``InMemory`` cache when available
+- Update VSCode ``launch.json`` file to include ``Profile`` build
 - Fix Tabs being always recreated
 - Update Unit tests
 - Update Documentation   

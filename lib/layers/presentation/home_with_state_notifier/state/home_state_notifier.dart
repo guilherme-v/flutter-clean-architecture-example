@@ -18,14 +18,9 @@ class HomeStateNotifier extends StateNotifier<HomeState> {
     final result = await getAllCharacters();
 
     // Handle success or error
-    result.fold(
-      (e) {
-        state = state.copyWith(errorMessage: 'fail', isLoading: false);
-      },
-      (list) {
-        final copy = state.copyWith(charactersList: list, isLoading: false);
-        state = copy;
-      },
+    state = result.fold(
+      (e) => state.copyWith(errorMessage: 'fail', isLoading: false),
+      (list) => state.copyWith(charactersList: list, isLoading: false),
     );
   }
 }
