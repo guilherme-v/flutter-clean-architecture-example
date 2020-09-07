@@ -15,14 +15,10 @@ class HomeState {
     bool isLoading,
     List<Character> charactersList,
     String errorMessage,
-  }) {
-    // final list = List.of(charactersList);
-    final l = charactersList;
-    final a = HomeState(
-      isLoading: isLoading ?? this.isLoading,
-      charactersList: charactersList,
-      errorMessage: errorMessage ?? this.errorMessage,
-    );
-    return a;
-  }
+  }) =>
+      HomeState(
+        isLoading: isLoading ?? this.isLoading,
+        charactersList: charactersList,
+        errorMessage: errorMessage ?? this.errorMessage,
+      );
 }
