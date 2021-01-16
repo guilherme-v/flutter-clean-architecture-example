@@ -25,7 +25,7 @@ dependencies:
     sdk: flutter
 
   # Service Locator
-  get_it: ^4.0.2
+  get_it: ^5.0.4
 
   # BLOC state management on Presentation layer
   bloc: ^6.0.0
