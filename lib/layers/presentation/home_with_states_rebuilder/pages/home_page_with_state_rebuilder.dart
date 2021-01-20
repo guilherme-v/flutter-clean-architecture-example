@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
+import '../../../../injection_container.dart' as di;
 import '../../../domain/entities/character.dart';
 import '../model/home_view_model.dart';
 
@@ -15,19 +16,23 @@ class HomePageWithStatesRebuilder extends StatefulWidget {
 class _HomePageState extends State<HomePageWithStatesRebuilder> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("RickAndMorty - StateRebuilder"),
-      ),
-      body: Center(
-        child: Container(
-          color: Colors.white,
-          child: WhenRebuilder<HomeViewModel>(
-            observe: () => RM.get<HomeViewModel>(),
-            onIdle: () => _showLoadButton(),
-            onWaiting: () => CircularProgressIndicator(),
-            onError: (error) => Text('Future completes with error $error'),
-            onData: (HomeViewModel data) => _showCharactersList(data.charList),
+    return Injector(
+      inject: [Inject<HomeViewModel>(() => di.sl<HomeViewModel>())],
+      builder: (_) => Scaffold(
+        appBar: AppBar(
+          title: Text("RickAndMorty - StateRebuilder"),
+        ),
+        body: Center(
+          child: Container(
+            color: Colors.white,
+            child: WhenRebuilder<HomeViewModel>(
+              observe: () => RM.get<HomeViewModel>(),
+              onIdle: () => _showLoadButton(),
+              onWaiting: () => CircularProgressIndicator(),
+              onError: (error) => Text('Future completes with error $error'),
+              onData: (HomeViewModel data) =>
+                  _showCharactersList(data.charList),
+            ),
           ),
         ),
       ),
