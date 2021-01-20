@@ -54,6 +54,9 @@ dependencies:
   state_notifier: ^0.6.0
   flutter_state_notifier: ^0.6.1
 
+  # General
+  functional_listener: ^1.1.1
+
 dev_dependencies:
   test: ^1.15.3
   flutter_test:
