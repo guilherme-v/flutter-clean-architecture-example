@@ -1,4 +1,5 @@
 import 'package:clean_arch_flutter/layers/data/memory/in_memory_cache.dart';
+import 'package:clean_arch_flutter/layers/presentation/home_with_value_notifier/controller/home_controller.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
@@ -34,6 +35,10 @@ Future<void> init() async {
   // to StateRebuilder version
   sl.registerFactory(
     () => HomeViewModel(getAllCharacters: sl()),
+  );
+  // to ValueNotifier version
+  sl.registerFactory(
+    () => HomeController(getAllCharacters: sl()),
   );
 
   // * Domain Layer

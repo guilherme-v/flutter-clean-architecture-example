@@ -1,3 +1,4 @@
+import 'package:clean_arch_flutter/layers/presentation/home_with_value_notifier/pages/home_page_with_value_notifier.dart';
 import 'package:flutter/material.dart';
 
 import 'home_with_bloc/pages/home_page_with_bloc.dart';
@@ -18,7 +19,8 @@ class _MainPageState extends State<MainPage> {
     HomePageWithBloc(),
     HomePageWithProvider(),
     HomePageWithStatesRebuilder(),
-    HomePageWithStateNotifier()
+    HomePageWithStateNotifier(),
+    HomePageWithValueNotifier()
   ];
 
   void _onItemTapped(int index) {
@@ -57,6 +59,10 @@ class _MainPageState extends State<MainPage> {
         const BottomNavigationBarItem(
           icon: const Icon(Icons.notifications_active),
           label: 'StateNotifier',
+        ),
+        const BottomNavigationBarItem(
+          icon: const Icon(Icons.notifications),
+          label: 'ValueNotifier',
         ),
       ],
       showUnselectedLabels: true,
