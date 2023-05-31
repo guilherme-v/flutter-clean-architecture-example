@@ -7,6 +7,6 @@ sealed class HomeEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-final class HomeInitEvent extends HomeEvent {
-  const HomeInitEvent();
+final class LoadNextPageEvent extends HomeEvent {
+  const LoadNextPageEvent();
 }

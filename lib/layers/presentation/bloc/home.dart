@@ -11,7 +11,7 @@ class CharacterPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => HomeBloc(
         getAllCharacters: context.read<GetAllCharacters>(),
-      )..add(const HomeInitEvent()),
+      )..add(const LoadNextPageEvent()),
       child: const HomeView(),
     );
   }
@@ -23,33 +23,75 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final status = context.select((HomeBloc b) => b.state.status);
-    return status != HomeStatus.success
-        ? const CircularProgressIndicator()
+    return status == HomeStatus.initial
+        ? const Center(child: CircularProgressIndicator())
         : const HomeViewContent();
   }
 }
 
-class HomeViewContent extends StatelessWidget {
+class HomeViewContent extends StatefulWidget {
   const HomeViewContent({Key? key}) : super(key: key);
 
   @override
+  State<HomeViewContent> createState() => _HomeViewContentState();
+}
+
+class _HomeViewContentState extends State<HomeViewContent> {
+  final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final list = context.select((HomeBloc b) => b.state.characters);
+    final state = context.select((HomeBloc b) => b.state);
+    final list = state.characters;
+
     return ListView.builder(
-      itemCount: list.length,
+      controller: _scrollController,
+      itemCount: list.length + 1,
       itemBuilder: (context, index) {
-        return Card(
-          elevation: 0,
-          color: Theme.of(context).colorScheme.surfaceVariant,
-          child: SizedBox(
-            width: 300,
-            height: 100,
-            child: Center(
-              child: Text(list[index].name ?? "no name"),
-            ),
-          ),
-        );
+        return index < list.length
+            ? Card(
+                elevation: 0,
+                color: Theme.of(context).colorScheme.surfaceVariant,
+                child: SizedBox(
+                  width: 300,
+                  height: 100,
+                  child: Center(
+                    child: Text(list[index].name ?? "no name"),
+                  ),
+                ),
+              )
+            : state.hasReachedEnd
+                ? SizedBox()
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: const Center(child: CircularProgressIndicator()),
+                  );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_isBottom) context.read<HomeBloc>().add(const LoadNextPageEvent());
+  }
+
+  bool get _isBottom {
+    if (!_scrollController.hasClients) return false;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.offset;
+    return currentScroll >= (maxScroll * 0.9);
   }
 }
