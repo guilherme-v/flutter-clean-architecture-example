@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rickmorty/layers/presentation/bloc/app.dart';
 import 'package:rickmorty/layers/presentation/theme.dart';
 
-enum StateManagersOptions {
+enum StateManagerOptions {
   bloc,
   cubit,
   provider,
@@ -20,12 +20,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late StateManagersOptions _current;
+  late StateManagerOptions _current;
 
   @override
   void initState() {
     super.initState();
-    _current = StateManagersOptions.bloc;
+    _current = StateManagerOptions.bloc;
   }
 
   @override
@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       themeMode: ThemeMode.system,
-      home: _current == StateManagersOptions.bloc
+      home: _current == StateManagerOptions.bloc
           ? const AppUsingBloc()
           : Container(),
     );

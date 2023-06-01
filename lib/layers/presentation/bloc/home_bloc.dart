@@ -11,8 +11,6 @@ part 'home_event.dart';
 
 part 'home_state.dart';
 
-const throttleDuration = Duration(milliseconds: 100);
-
 EventTransformer<E> throttleDroppable<E>(Duration duration) {
   return (events, mapper) {
     return droppable<E>().call(events.throttle(duration), mapper);
@@ -25,7 +23,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }) : super(const HomeState()) {
     on<LoadNextPageEvent>(
       _loadNextPage,
-      transformer: throttleDroppable(throttleDuration),
+      transformer: throttleDroppable(const Duration(milliseconds: 100)),
     );
   }
 
@@ -36,8 +34,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (state.hasReachedEnd) return;
 
     emit(state.copyWith(status: HomeStatus.loading));
-
-    print("FEEETCHING $_currentPage");
 
     final list = await getAllCharacters(page: _currentPage);
 

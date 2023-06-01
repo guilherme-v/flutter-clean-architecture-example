@@ -9,9 +9,11 @@ class CharacterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeBloc(
+      create: (context) =>
+      HomeBloc(
         getAllCharacters: context.read<GetAllCharacters>(),
-      )..add(const LoadNextPageEvent()),
+      )
+        ..add(const LoadNextPageEvent()),
       child: const HomeView(),
     );
   }
@@ -50,28 +52,41 @@ class _HomeViewContentState extends State<HomeViewContent> {
     final state = context.select((HomeBloc b) => b.state);
     final list = state.characters;
 
-    return ListView.builder(
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 200,
+        childAspectRatio: 3/2,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
+      ),
       controller: _scrollController,
       itemCount: list.length + 1,
       itemBuilder: (context, index) {
+        final char = list[index];
         return index < list.length
-            ? Card(
-                elevation: 0,
-                color: Theme.of(context).colorScheme.surfaceVariant,
-                child: SizedBox(
-                  width: 300,
-                  height: 100,
-                  child: Center(
-                    child: Text(list[index].name ?? "no name"),
-                  ),
-                ),
+            ? SizedBox(
+          height: 400,
+              child: Card(
+              elevation: 0,
+              color: Theme
+                  .of(context)
+                  .colorScheme
+                  .surfaceVariant,
+              child: Column(
+                children: [
+                  Image.network(char.image!, width: 100, height: 100, fit: BoxFit.scaleDown),
+                  Text(char.name ?? "no name"),
+                  Text(char.name ?? "no name"),
+                ],
               )
+        ),
+            )
             : state.hasReachedEnd
-                ? SizedBox()
-                : Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Center(child: CircularProgressIndicator()),
-                  );
+            ? SizedBox()
+            : Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: const Center(child: CircularProgressIndicator()),
+        );
       },
     );
   }
