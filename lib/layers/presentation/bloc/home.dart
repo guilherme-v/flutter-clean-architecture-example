@@ -9,11 +9,9 @@ class CharacterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-      HomeBloc(
+      create: (context) => HomeBloc(
         getAllCharacters: context.read<GetAllCharacters>(),
-      )
-        ..add(const LoadNextPageEvent()),
+      )..add(const LoadNextPageEvent()),
       child: const HomeView(),
     );
   }
@@ -52,42 +50,90 @@ class _HomeViewContentState extends State<HomeViewContent> {
     final state = context.select((HomeBloc b) => b.state);
     final list = state.characters;
 
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 200,
-        childAspectRatio: 3/2,
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 8,
-      ),
-      controller: _scrollController,
-      itemCount: list.length + 1,
-      itemBuilder: (context, index) {
-        final char = list[index];
-        return index < list.length
-            ? SizedBox(
-          height: 400,
-              child: Card(
-              elevation: 0,
-              color: Theme
-                  .of(context)
-                  .colorScheme
-                  .surfaceVariant,
-              child: Column(
-                children: [
-                  Image.network(char.image!, width: 100, height: 100, fit: BoxFit.scaleDown),
-                  Text(char.name ?? "no name"),
-                  Text(char.name ?? "no name"),
-                ],
-              )
+    final textTheme = Theme.of(context).textTheme;
+
+    // The displayColor is applied to displayLarge, displayMedium, displaySmall,
+    // headlineLarge, headlineMedium, and bodySmall. The bodyColor is applied to
+    // the remaining text styles.
+    final textThemeDisplay =
+        textTheme.apply(displayColor: Theme.of(context).colorScheme.onSurface);
+
+    final textThemeBody =
+        textTheme.apply(bodyColor: Theme.of(context).colorScheme.surfaceTint);
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // Adjust the number of columns here
+          childAspectRatio: 1 / 1.42,
         ),
-            )
-            : state.hasReachedEnd
-            ? SizedBox()
-            : Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: const Center(child: CircularProgressIndicator()),
-        );
-      },
+        controller: _scrollController,
+        itemCount: list.length + 1,
+        itemBuilder: (context, index) {
+          final char = list[index];
+          return index < list.length
+              ? Card(
+                  elevation: 0,
+                  color: Theme.of(context).colorScheme.surfaceVariant,
+                  child: Stack(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(16.0),
+                              topRight: Radius.circular(16.0),
+                            ),
+                            child: SizedBox(
+                              height: 142,
+                              child: Image.network(
+                                char.image!,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Text(
+                                  char.name ?? "no name",
+                                  style: textTheme.titleSmall,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  char.location?.name ?? "no location",
+                                  style: textThemeDisplay.bodySmall,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Positioned(
+                        bottom: 12,
+                        left: 12,
+                        child: Text(
+                          'read more',
+                          style: textThemeBody.labelSmall,
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              : state.hasReachedEnd
+                  ? SizedBox()
+                  : Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: const Center(child: CircularProgressIndicator()),
+                    );
+        },
+      ),
     );
   }
 
