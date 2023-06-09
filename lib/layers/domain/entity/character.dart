@@ -30,46 +30,4 @@ class Character {
     this.url,
     this.created,
   });
-
-  factory Character.fromRawJson(String str) =>
-      Character.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory Character.fromJson(Map<String, dynamic> json) => Character(
-        id: json["id"],
-        name: json["name"],
-        status: json["status"],
-        species: json["species"],
-        type: json["type"],
-        gender: json["gender"],
-        origin:
-            json["origin"] == null ? null : Location.fromJson(json["origin"]),
-        location: json["location"] == null
-            ? null
-            : Location.fromJson(json["location"]),
-        image: json["image"],
-        episode: json["episode"] == null
-            ? []
-            : List<String>.from(json["episode"]!.map((x) => x)),
-        url: json["url"],
-        created:
-            json["created"] == null ? null : DateTime.parse(json["created"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "status": status,
-        "species": species,
-        "type": type,
-        "gender": gender,
-        "origin": origin?.toJson(),
-        "location": location?.toJson(),
-        "image": image,
-        "episode":
-            episode == null ? [] : List<dynamic>.from(episode!.map((x) => x)),
-        "url": url,
-        "created": created?.toIso8601String(),
-      };
 }

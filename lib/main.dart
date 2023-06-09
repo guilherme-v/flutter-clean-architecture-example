@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rickmorty/layers/data/source/local/local_storage.dart';
+import 'package:rickmorty/layers/data/source/network/api.dart';
 import 'package:rickmorty/layers/presentation/bloc/app.dart';
 import 'package:rickmorty/layers/presentation/theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum StateManagerOptions {
   bloc,
@@ -8,7 +11,11 @@ enum StateManagerOptions {
   provider,
 }
 
-void main() {
+late SharedPreferences sharedPref;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  sharedPref = await SharedPreferences.getInstance();
   runApp(const MyApp());
 }
 

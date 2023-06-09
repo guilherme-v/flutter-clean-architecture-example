@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rickmorty/layers/data/character_repository_impl.dart';
+import 'package:rickmorty/layers/data/source/local/local_storage.dart';
+import 'package:rickmorty/layers/data/source/network/api.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 import 'package:rickmorty/layers/presentation/bloc/home.dart';
 import 'package:rickmorty/layers/presentation/theme.dart';
+import 'package:rickmorty/main.dart';
 
 class AppUsingBloc extends StatelessWidget {
   const AppUsingBloc({super.key});
@@ -10,7 +14,12 @@ class AppUsingBloc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
-      value: GetAllCharacters(),
+      value: GetAllCharacters(
+        repository: CharacterRepositoryImpl(
+          api: ApiImpl(),
+          localStorage: LocalStorageImpl(sharedPreferences: sharedPref),
+        ),
+      ),
       child: const AppView(),
     );
   }
