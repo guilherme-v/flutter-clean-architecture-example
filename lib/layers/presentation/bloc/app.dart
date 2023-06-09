@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(8),
           child: Text(
             widget.title,
-            style: textTheme.displaySmall,
+            style: textTheme.headlineSmall,
           ),
         ),
       ),
