@@ -1,21 +1,7 @@
-import 'dart:convert';
-
+import 'package:equatable/equatable.dart';
 import 'package:rickmorty/layers/domain/entity/location.dart';
 
-class Character {
-  final int? id;
-  final String? name;
-  final String? status;
-  final String? species;
-  final String? type;
-  final String? gender;
-  final Location? origin;
-  final Location? location;
-  final String? image;
-  final List<String>? episode;
-  final String? url;
-  final DateTime? created;
-
+class Character with EquatableMixin {
   Character({
     this.id,
     this.name,
@@ -30,4 +16,33 @@ class Character {
     this.url,
     this.created,
   });
+
+  final int? id;
+  final String? name;
+  final String? status;
+  final String? species;
+  final String? type;
+  final String? gender;
+  final Location? origin;
+  final Location? location;
+  final String? image;
+  final List<String>? episode;
+  final String? url;
+  final DateTime? created;
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+        status,
+        species,
+        type,
+        gender,
+        origin,
+        location,
+        image,
+        episode,
+        url,
+        created,
+      ];
 }

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:rickmorty/layers/data/dto/location_dto.dart';
 import 'package:rickmorty/layers/domain/entity/character.dart';
-import 'package:rickmorty/layers/domain/entity/location.dart';
 
 class CharacterDto extends Character {
   CharacterDto({
@@ -19,11 +19,17 @@ class CharacterDto extends Character {
     super.created,
   });
 
+  // ---------------------------------------------------------------------------
+  // JSON
+  // ---------------------------------------------------------------------------
   factory CharacterDto.fromRawJson(String str) =>
       CharacterDto.fromMap(json.decode(str));
 
   String toRawJson() => json.encode(toMap());
 
+  // ---------------------------------------------------------------------------
+  // Maps
+  // ---------------------------------------------------------------------------
   factory CharacterDto.fromMap(Map<String, dynamic> json) => CharacterDto(
         id: json["id"],
         name: json["name"],
@@ -32,10 +38,10 @@ class CharacterDto extends Character {
         type: json["type"],
         gender: json["gender"],
         origin:
-            json["origin"] == null ? null : Location.fromJson(json["origin"]),
+            json["origin"] == null ? null : LocationDto.fromMap(json["origin"]),
         location: json["location"] == null
             ? null
-            : Location.fromJson(json["location"]),
+            : LocationDto.fromMap(json["location"]),
         image: json["image"],
         episode: json["episode"] == null
             ? []
@@ -52,8 +58,11 @@ class CharacterDto extends Character {
         "species": species,
         "type": type,
         "gender": gender,
-        "origin": origin?.toJson(),
-        "location": location?.toJson(),
+        "origin":
+            origin != null ? LocationDto.fromLocation(origin!).toMap() : null,
+        "location": location != null
+            ? LocationDto.fromLocation(location!).toMap()
+            : null,
         "image": image,
         "episode":
             episode == null ? [] : List<dynamic>.from(episode!.map((x) => x)),
