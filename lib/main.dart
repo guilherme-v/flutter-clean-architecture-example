@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rickmorty/layers/data/source/local/local_storage.dart';
-import 'package:rickmorty/layers/data/source/network/api.dart';
-import 'package:rickmorty/layers/presentation/bloc/app.dart';
+import 'package:rickmorty/layers/presentation/home/using_bloc/app.dart';
 import 'package:rickmorty/layers/presentation/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
