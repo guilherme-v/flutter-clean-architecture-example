@@ -21,28 +21,26 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   CharacterBloc({
     required this.getAllCharacters,
   }) : super(const CharacterState()) {
-    on<LoadNextPageEvent>(
-      _loadNextPage,
+    on<FetchNextPageEvent>(
+      _fetchNextPage,
       transformer: throttleDroppable(const Duration(milliseconds: 100)),
     );
   }
 
   final GetAllCharacters getAllCharacters;
-  var _currentPage = 40;
 
-  Future<void> _loadNextPage(event, emit) async {
+  Future<void> _fetchNextPage(event, emit) async {
     if (state.hasReachedEnd) return;
 
     emit(state.copyWith(status: CharacterStatus.loading));
 
-    final list = await getAllCharacters(page: _currentPage);
+    final list = await getAllCharacters(page: state.currentPage);
 
     emit(state.copyWith(
       status: CharacterStatus.success,
       characters: List.of(state.characters)..addAll(list),
       hasReachedEnd: list.isEmpty,
+      currentPage: state.currentPage + 1,
     ));
-
-    _currentPage++;
   }
 }

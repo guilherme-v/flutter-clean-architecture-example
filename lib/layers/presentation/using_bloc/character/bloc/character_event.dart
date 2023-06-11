@@ -7,6 +7,6 @@ sealed class CharacterEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-final class LoadNextPageEvent extends CharacterEvent {
-  const LoadNextPageEvent();
+final class FetchNextPageEvent extends CharacterEvent {
+  const FetchNextPageEvent();
 }

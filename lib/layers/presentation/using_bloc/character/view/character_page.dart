@@ -44,7 +44,7 @@ class __ContentState extends State<_Content> {
   @override
   void initState() {
     super.initState();
-    context.read<CharacterBloc>().add(const LoadNextPageEvent());
+    context.read<CharacterBloc>().add(const FetchNextPageEvent());
     _scrollController.addListener(_onScroll);
   }
 
@@ -65,6 +65,7 @@ class __ContentState extends State<_Content> {
         Padding(
           padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
           child: GridView.builder(
+            key: const Key('character_page_list_key'),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, // Adjust the number of columns here
               childAspectRatio: 1 / 1.36,
@@ -98,7 +99,7 @@ class __ContentState extends State<_Content> {
 
   void _onScroll() {
     if (_isBottom) {
-      context.read<CharacterBloc>().add(const LoadNextPageEvent());
+      context.read<CharacterBloc>().add(const FetchNextPageEvent());
     }
   }
 
