@@ -3,62 +3,54 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
-import 'package:rickmorty/layers/presentation/using_bloc/character/character_page_bloc.dart';
+import 'package:rickmorty/layers/presentation/using_bloc/character/bloc/character_bloc.dart';
 
-// -----------------------------------------------------------------------------
-// Page
-// -----------------------------------------------------------------------------
 class CharacterPage extends StatelessWidget {
   const CharacterPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeBloc(
+      create: (context) => CharacterBloc(
         getAllCharacters: context.read<GetAllCharacters>(),
-      )..add(const LoadNextPageEvent()),
+      ),
       child: const CharacterView(),
     );
   }
 }
 
-// -----------------------------------------------------------------------------
-// View
-// -----------------------------------------------------------------------------
 class CharacterView extends StatelessWidget {
   const CharacterView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final status = context.select((HomeBloc b) => b.state.status);
-    return status == HomeStatus.initial
+    final status = context.select((CharacterBloc b) => b.state.status);
+    return status == CharacterStatus.initial
         ? const Center(child: CircularProgressIndicator())
         : const _Content();
   }
 }
 
-// -----------------------------------------------------------------------------
-// Content
-// -----------------------------------------------------------------------------
 class _Content extends StatefulWidget {
   const _Content({Key? key}) : super(key: key);
 
   @override
-  State<_Content> createState() => _ContentState();
+  State<_Content> createState() => __ContentState();
 }
 
-class _ContentState extends State<_Content> {
+class __ContentState extends State<_Content> {
   final _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
+    context.read<CharacterBloc>().add(const LoadNextPageEvent());
     _scrollController.addListener(_onScroll);
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = context.select((HomeBloc b) => b.state);
+    final state = context.select((CharacterBloc b) => b.state);
     final list = state.characters;
     final hasReachedEnd = state.hasReachedEnd;
 
@@ -84,7 +76,7 @@ class _ContentState extends State<_Content> {
             itemBuilder: (context, index) {
               if (index < list.length) {
                 final char = list[index];
-                return _CharacterCard(char: char);
+                return CharacterCard(char: char);
               }
               return hasReachedEnd
                   ? const SizedBox()
@@ -106,7 +98,7 @@ class _ContentState extends State<_Content> {
 
   void _onScroll() {
     if (_isBottom) {
-      context.read<HomeBloc>().add(const LoadNextPageEvent());
+      context.read<CharacterBloc>().add(const LoadNextPageEvent());
     }
   }
 
@@ -118,11 +110,8 @@ class _ContentState extends State<_Content> {
   }
 }
 
-// -----------------------------------------------------------------------------
-// Card
-// -----------------------------------------------------------------------------
-class _CharacterCard extends StatelessWidget {
-  const _CharacterCard({super.key, required this.char});
+class CharacterCard extends StatelessWidget {
+  const CharacterCard({super.key, required this.char});
 
   final Character char;
 

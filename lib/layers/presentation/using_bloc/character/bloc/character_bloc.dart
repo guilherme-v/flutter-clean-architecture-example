@@ -7,9 +7,9 @@ import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 import 'package:stream_transform/stream_transform.dart';
 
-part 'character_page_event.dart';
+part './character_event.dart';
 
-part 'character_page_state.dart';
+part './character_state.dart';
 
 EventTransformer<E> throttleDroppable<E>(Duration duration) {
   return (events, mapper) {
@@ -17,10 +17,10 @@ EventTransformer<E> throttleDroppable<E>(Duration duration) {
   };
 }
 
-class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc({
+class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
+  CharacterBloc({
     required this.getAllCharacters,
-  }) : super(const HomeState()) {
+  }) : super(const CharacterState()) {
     on<LoadNextPageEvent>(
       _loadNextPage,
       transformer: throttleDroppable(const Duration(milliseconds: 100)),
@@ -33,12 +33,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _loadNextPage(event, emit) async {
     if (state.hasReachedEnd) return;
 
-    emit(state.copyWith(status: HomeStatus.loading));
+    emit(state.copyWith(status: CharacterStatus.loading));
 
     final list = await getAllCharacters(page: _currentPage);
 
     emit(state.copyWith(
-      status: HomeStatus.success,
+      status: CharacterStatus.success,
       characters: List.of(state.characters)..addAll(list),
       hasReachedEnd: list.isEmpty,
     ));

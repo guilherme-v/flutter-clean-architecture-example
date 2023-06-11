@@ -214,6 +214,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -264,6 +269,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      sha256: a3715e3bc90294e971cb7dc063fbf3cd9ee0ebf8604ffeafabd9e6f16abbdbe6
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.18.0"
   io:
     dependency: transitive
     description:
@@ -328,6 +341,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  mockingjay:
+    dependency: "direct dev"
+    description:
+      name: mockingjay
+      sha256: c31b9850139a2a54d6bcfa02af022a8b15bf7c0bb83b0d5881e001e396fa91de
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
   mocktail:
     dependency: "direct dev"
     description:

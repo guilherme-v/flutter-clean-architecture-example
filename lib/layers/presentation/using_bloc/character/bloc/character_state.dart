@@ -1,24 +1,24 @@
-part of 'character_page_bloc.dart';
+part of './character_bloc.dart';
 
-enum HomeStatus { initial, loading, success, failure }
+enum CharacterStatus { initial, loading, success, failure }
 
-class HomeState extends Equatable {
-  const HomeState({
-    this.status = HomeStatus.initial,
+class CharacterState extends Equatable {
+  const CharacterState({
+    this.status = CharacterStatus.initial,
     this.characters = const [],
     this.hasReachedEnd = false,
   });
 
-  final HomeStatus status;
+  final CharacterStatus status;
   final List<Character> characters;
   final bool hasReachedEnd;
 
-  HomeState copyWith({
-    HomeStatus? status,
+  CharacterState copyWith({
+    CharacterStatus? status,
     List<Character>? characters,
     bool? hasReachedEnd,
   }) {
-    return HomeState(
+    return CharacterState(
       status: status ?? this.status,
       characters: characters ?? this.characters,
       hasReachedEnd: hasReachedEnd ?? this.hasReachedEnd,

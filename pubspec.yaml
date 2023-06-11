@@ -43,6 +43,9 @@ dependencies:
   stream_transform: ^2.1.0
   shared_preferences: ^2.1.2
   cached_network_image: ^3.2.3
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +59,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   test: ^1.24.1
   mocktail: ^0.3.0
+  mockingjay: ^0.3.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
