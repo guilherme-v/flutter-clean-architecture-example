@@ -36,7 +36,9 @@ class _CharacterViewState extends State<CharacterView> {
   @override
   void initState() {
     super.initState();
-    context.read<CharacterBloc>().add(const FetchNextPageEvent());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CharacterBloc>().add(const FetchNextPageEvent());
+    });
   }
 
   @override

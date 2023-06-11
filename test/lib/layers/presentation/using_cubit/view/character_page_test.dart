@@ -3,46 +3,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:rickmorty/layers/presentation/using_bloc/character/bloc/character_bloc.dart';
-import 'package:rickmorty/layers/presentation/using_bloc/character/view/character_page.dart';
+import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/cubit/character_cubit.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/view/character_page.dart';
 
-import '../../../../../../fixtures/fixtures.dart';
-import '../../../helper/pump_app.dart';
+import '../../../../../fixtures/fixtures.dart';
+import '../../helper/pump_app.dart';
 
-class CharacterBlocMock extends MockBloc<CharacterEvent, CharacterState>
-    implements CharacterBloc {}
+class CharacterCubitMock extends MockCubit<CharacterState>
+    implements CharacterCubit {}
 
 void main() {
   group('CharacterPage', () {
     late GetAllCharactersMock getAllCharactersMock;
-    late CharacterBloc blocMock;
+    late CharacterCubit cubit;
 
     setUp(() {
       getAllCharactersMock = GetAllCharactersMock();
-      blocMock = CharacterBlocMock();
+      cubit = CharacterCubitMock();
 
       when(() => getAllCharactersMock.call(page: any(named: 'page')))
           .thenAnswer((_) async => [...characterList1, ...characterList2]);
     });
 
-    testWidgets(
-      'renders a CharacterView',
-      (tester) async {
-        await tester.pumpApp(
-          const CharacterPage(),
-          getAllCharacters: getAllCharactersMock,
-        );
-        // WidgetsBinding.instance.addPostFrameCallback((_) { ...
-        //  https://github.com/flutter/flutter/issues/11181
-        await tester.pumpAndSettle(const Duration(seconds: 1));
+    testWidgets('renders a CharacterView', (tester) async {
+      when(() => getAllCharactersMock(page: any(named: 'page'))).thenAnswer(
+        (_) async => characterList1,
+      );
 
-        expectLater(find.byType(CharacterView), findsOneWidget);
-      },
-    );
+      await tester.pumpApp(
+        const CharacterPage(),
+        getAllCharacters: getAllCharactersMock,
+      );
+      // await tester.pumpAndSettle(const Duration(seconds: 1));
+
+      expect(find.byType(CharacterView), findsOneWidget);
+    });
 
     testWidgets('renders a grid of Characters widgets', (tester) async {
       const key = Key('character_page_list_key');
-      when(() => blocMock.state).thenReturn(
+      when(() => cubit.state).thenReturn(
         CharacterState(
           currentPage: 2,
           status: CharacterStatus.success,
@@ -50,14 +50,16 @@ void main() {
           characters: [...characterList1, ...characterList2],
         ),
       );
+      when(() => cubit.fetchNextPage()).thenAnswer((_) async => true);
 
       await tester.pumpApp(
         BlocProvider.value(
-          value: blocMock,
+          value: cubit,
           child: const CharacterView(),
         ),
         getAllCharacters: getAllCharactersMock,
       );
+      await tester.pumpAndSettle(const Duration(seconds: 2));
 
       expect(find.byKey(key), findsOneWidget);
       final list = [...characterList1, ...characterList2];
