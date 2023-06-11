@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rickmorty/layers/presentation/home/using_bloc/app.dart';
 import 'package:rickmorty/layers/presentation/theme.dart';
+import 'package:rickmorty/layers/presentation/using_bloc/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum StateManagerOptions {

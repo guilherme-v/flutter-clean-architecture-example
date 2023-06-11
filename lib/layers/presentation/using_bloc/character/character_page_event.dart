@@ -1,4 +1,4 @@
-part of 'home_bloc.dart';
+part of 'character_page_bloc.dart';
 
 sealed class HomeEvent extends Equatable {
   const HomeEvent();

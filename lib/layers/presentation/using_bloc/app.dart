@@ -4,8 +4,8 @@ import 'package:rickmorty/layers/data/character_repository_impl.dart';
 import 'package:rickmorty/layers/data/source/local/local_storage.dart';
 import 'package:rickmorty/layers/data/source/network/api.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
-import 'package:rickmorty/layers/presentation/home/using_bloc/home.dart';
 import 'package:rickmorty/layers/presentation/theme.dart';
+import 'package:rickmorty/layers/presentation/using_bloc/character/character_page.dart';
 import 'package:rickmorty/main.dart';
 
 class AppUsingBloc extends StatelessWidget {

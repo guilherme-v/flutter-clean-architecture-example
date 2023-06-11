@@ -1,4 +1,4 @@
-part of 'home_bloc.dart';
+part of 'character_page_bloc.dart';
 
 enum HomeStatus { initial, loading, success, failure }
 

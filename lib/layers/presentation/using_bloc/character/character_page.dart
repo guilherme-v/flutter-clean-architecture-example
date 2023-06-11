@@ -1,8 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
-import 'package:rickmorty/layers/presentation/home/using_bloc/home_bloc.dart';
+import 'package:rickmorty/layers/presentation/using_bloc/character/character_page_bloc.dart';
 
 // -----------------------------------------------------------------------------
 // Page
@@ -75,7 +76,9 @@ class _ContentState extends State<_Content> {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, // Adjust the number of columns here
               childAspectRatio: 1 / 1.36,
+              crossAxisSpacing: 4,
             ),
+            padding: const EdgeInsets.all(8),
             controller: _scrollController,
             itemCount: length,
             itemBuilder: (context, index) {
@@ -153,9 +156,11 @@ class _CharacterCard extends StatelessWidget {
                 ),
                 child: SizedBox(
                   height: 142,
-                  child: Image.network(
-                    char.image!,
+                  child: CachedNetworkImage(
+                    imageUrl: char.image!,
                     fit: BoxFit.cover,
+                    errorWidget: (ctx, url, err) => const Icon(Icons.error),
+                    placeholder: (ctx, url) => const Icon(Icons.image),
                   ),
                 ),
               ),
@@ -166,7 +171,7 @@ class _CharacterCard extends StatelessWidget {
                   children: [
                     Text(
                       char.name ?? "no name",
-                      style: textThemeDisplay.titleSmall,
+                      style: textThemeDisplay.titleMedium,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
