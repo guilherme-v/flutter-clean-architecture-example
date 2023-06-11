@@ -9,7 +9,7 @@ import 'package:rickmorty/layers/presentation/using_bloc/character/bloc/characte
 // Page
 // -----------------------------------------------------------------------------
 class CharacterPage extends StatelessWidget {
-  const CharacterPage({Key? key}) : super(key: key);
+  const CharacterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class CharacterPage extends StatelessWidget {
 // View
 // -----------------------------------------------------------------------------
 class CharacterView extends StatefulWidget {
-  const CharacterView({Key? key}) : super(key: key);
+  const CharacterView({super.key});
 
   @override
   State<CharacterView> createState() => _CharacterViewState();
@@ -52,7 +52,7 @@ class _CharacterViewState extends State<CharacterView> {
 // Content
 // -----------------------------------------------------------------------------
 class _Content extends StatefulWidget {
-  const _Content({Key? key}) : super(key: key);
+  const _Content({super.key});
 
   @override
   State<_Content> createState() => __ContentState();
