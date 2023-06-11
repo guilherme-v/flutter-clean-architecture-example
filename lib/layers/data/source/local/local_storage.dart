@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:rickmorty/layers/data/dto/character_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +22,7 @@ class LocalStorageImpl implements LocalStorage {
 
   @override
   List<CharacterDto> loadCharactersPage({required int page}) {
-    final key = _getKeyToPage(page);
+    final key = getKeyToPage(page);
     final jsonList = _sharedPref.getStringList(key);
 
     return jsonList != null
@@ -30,16 +31,17 @@ class LocalStorageImpl implements LocalStorage {
   }
 
   @override
-  saveCharactersPage({
+  Future<bool> saveCharactersPage({
     required int page,
     required List<CharacterDto> list,
   }) {
     final jsonList = list.map((e) => e.toRawJson()).toList();
-    final key = _getKeyToPage(page);
+    final key = getKeyToPage(page);
     return _sharedPref.setStringList(key, jsonList);
   }
 
-  String _getKeyToPage(int page) {
+  @visibleForTesting
+  static String getKeyToPage(int page) {
     return '${cachedCharacterListKey}_$page';
   }
 }
