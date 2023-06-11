@@ -19,22 +19,23 @@ EventTransformer<E> throttleDroppable<E>(Duration duration) {
 
 class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   CharacterBloc({
-    required this.getAllCharacters,
-  }) : super(const CharacterState()) {
+    required GetAllCharacters getAllCharacters,
+  })  : _getAllCharacters = getAllCharacters,
+        super(const CharacterState()) {
     on<FetchNextPageEvent>(
       _fetchNextPage,
       transformer: throttleDroppable(const Duration(milliseconds: 100)),
     );
   }
 
-  final GetAllCharacters getAllCharacters;
+  final GetAllCharacters _getAllCharacters;
 
   Future<void> _fetchNextPage(event, emit) async {
     if (state.hasReachedEnd) return;
 
     emit(state.copyWith(status: CharacterStatus.loading));
 
-    final list = await getAllCharacters(page: state.currentPage);
+    final list = await _getAllCharacters(page: state.currentPage);
 
     emit(state.copyWith(
       status: CharacterStatus.success,

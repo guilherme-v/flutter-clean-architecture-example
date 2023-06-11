@@ -5,6 +5,9 @@ import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 import 'package:rickmorty/layers/presentation/using_bloc/character/bloc/character_bloc.dart';
 
+// -----------------------------------------------------------------------------
+// Page
+// -----------------------------------------------------------------------------
 class CharacterPage extends StatelessWidget {
   const CharacterPage({Key? key}) : super(key: key);
 
@@ -19,8 +22,22 @@ class CharacterPage extends StatelessWidget {
   }
 }
 
-class CharacterView extends StatelessWidget {
+// -----------------------------------------------------------------------------
+// View
+// -----------------------------------------------------------------------------
+class CharacterView extends StatefulWidget {
   const CharacterView({Key? key}) : super(key: key);
+
+  @override
+  State<CharacterView> createState() => _CharacterViewState();
+}
+
+class _CharacterViewState extends State<CharacterView> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<CharacterBloc>().add(const FetchNextPageEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +48,9 @@ class CharacterView extends StatelessWidget {
   }
 }
 
+// -----------------------------------------------------------------------------
+// Content
+// -----------------------------------------------------------------------------
 class _Content extends StatefulWidget {
   const _Content({Key? key}) : super(key: key);
 
@@ -111,6 +131,9 @@ class __ContentState extends State<_Content> {
   }
 }
 
+// -----------------------------------------------------------------------------
+// Card
+// -----------------------------------------------------------------------------
 class CharacterCard extends StatelessWidget {
   const CharacterCard({super.key, required this.char});
 
