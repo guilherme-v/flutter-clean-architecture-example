@@ -25,9 +25,3 @@ class CharacterRepositoryImpl implements CharacterRepository {
     return fetchedList;
   }
 }
-
-// void main() async {
-//   final a = CharacterRepositoryImpl();
-//   final l = await a.getCharacters();
-//   print(l);
-// }
