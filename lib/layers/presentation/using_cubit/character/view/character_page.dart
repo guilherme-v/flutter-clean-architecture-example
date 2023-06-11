@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
-import 'package:rickmorty/layers/presentation/using_cubit/cubit/character_cubit.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/character/cubit/character_cubit.dart';
 
 // -----------------------------------------------------------------------------
 // Page
