@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rickmorty/layers/presentation/theme.dart';
-import 'package:rickmorty/layers/presentation/using_bloc/app.dart';
-import 'package:rickmorty/layers/presentation/using_cubit/app.dart';
+import 'package:rickmorty/layers/presentation/using_provider/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum StateManagerOptions {
@@ -31,7 +30,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _current = StateManagerOptions.cubit;
+    _current = StateManagerOptions.provider;
   }
 
   @override
@@ -41,8 +40,8 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       themeMode: ThemeMode.system,
-      home: _current == StateManagerOptions.cubit
-          ? const AppUsingCubit()
+      home: _current == StateManagerOptions.provider
+          ? const AppUsingProvider()
           : Container(),
     );
   }
