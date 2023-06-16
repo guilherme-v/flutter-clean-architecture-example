@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rickmorty/layers/presentation/theme.dart';
-import 'package:rickmorty/layers/presentation/using_provider/app.dart';
+import 'package:rickmorty/layers/presentation/using_riverpod/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum StateManagerOptions {
   bloc,
   cubit,
   provider,
+  riverpod,
 }
 
 late SharedPreferences sharedPref;
@@ -30,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _current = StateManagerOptions.provider;
+    _current = StateManagerOptions.riverpod;
   }
 
   @override
@@ -40,8 +42,8 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       themeMode: ThemeMode.system,
-      home: _current == StateManagerOptions.provider
-          ? const AppUsingProvider()
+      home: _current == StateManagerOptions.riverpod
+          ? const AppUsingRiverPod()
           : Container(),
     );
   }
