@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:rickmorty/layers/domain/entity/character.dart';
-import 'package:rickmorty/layers/presentation/using_get_it/character/cubit/character_change_notifier.dart';
+import 'package:rickmorty/layers/presentation/using_get_it/change_notifier/character_change_notifier.dart';
 
 // -----------------------------------------------------------------------------
 // Page
@@ -65,8 +65,12 @@ class __ContentState extends State<_Content> with GetItStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final list = watchX((CharacterChangeNotifier state) => state.characters);
-    final end = watchX((CharacterChangeNotifier state) => state.hasReachedEnd);
+    List<Character> list = watchX(
+      (CharacterChangeNotifier state) => state.characters,
+    );
+    bool end = watchX(
+      (CharacterChangeNotifier state) => state.hasReachedEnd,
+    );
 
     final length = end
         ? list.length

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rickmorty/layers/presentation/theme.dart';
+import 'package:rickmorty/layers/presentation/using_get_it/app.dart';
 import 'package:rickmorty/layers/presentation/using_get_it/injector.dart';
 import 'package:rickmorty/layers/presentation/using_riverpod/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -46,7 +47,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       themeMode: ThemeMode.system,
       home: _current == StateManagerOptions.getIt
-          ? const AppUsingRiverPod()
+          ? const AppUsingGetIt()
           : Container(),
     );
   }
