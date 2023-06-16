@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rickmorty/layers/presentation/theme.dart';
+import 'package:rickmorty/layers/presentation/using_get_it/injector.dart';
 import 'package:rickmorty/layers/presentation/using_riverpod/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,6 +10,7 @@ enum StateManagerOptions {
   cubit,
   provider,
   riverpod,
+  getIt,
 }
 
 late SharedPreferences sharedPref;
@@ -16,6 +18,7 @@ late SharedPreferences sharedPref;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharedPref = await SharedPreferences.getInstance();
+  initializeGetIt();
   runApp(const MyApp());
 }
 
@@ -32,7 +35,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _current = StateManagerOptions.riverpod;
+    _current = StateManagerOptions.getIt;
   }
 
   @override
@@ -42,7 +45,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       themeMode: ThemeMode.system,
-      home: _current == StateManagerOptions.riverpod
+      home: _current == StateManagerOptions.getIt
           ? const AppUsingRiverPod()
           : Container(),
     );

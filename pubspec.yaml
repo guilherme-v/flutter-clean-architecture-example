@@ -49,6 +49,8 @@ dependencies:
   bloc_test: ^9.1.3
   provider: ^6.0.5
   flutter_riverpod: ^2.3.6
+  get_it: ^7.6.0
+  get_it_mixin: ^4.2.0
 
 dev_dependencies:
   flutter_test:

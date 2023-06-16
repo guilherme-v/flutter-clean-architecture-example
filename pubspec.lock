@@ -261,6 +261,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
+  functional_listener:
+    dependency: transitive
+    description:
+      name: functional_listener
+      sha256: "026d1bd4f66367f11d9ec9f1f1ddb42b89e4484b356972c76d983266cf82f33f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.1"
+  get_it:
+    dependency: "direct main"
+    description:
+      name: get_it
+      sha256: "529de303c739fca98cd7ece5fca500d8ff89649f1bb4b4e94fb20954abcd7468"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.6.0"
+  get_it_mixin:
+    dependency: "direct main"
+    description:
+      name: get_it_mixin
+      sha256: d59fe7e49e258ddf9f10580b50cce5c129d3f2f6a340b684847615128c641261
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.0"
   glob:
     dependency: transitive
     description:
