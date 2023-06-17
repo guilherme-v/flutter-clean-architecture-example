@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rickmorty/layers/presentation/theme.dart';
 import 'package:rickmorty/layers/presentation/using_get_it/app.dart';
 import 'package:rickmorty/layers/presentation/using_get_it/injector.dart';
+import 'package:rickmorty/layers/presentation/using_mobx/app.dart';
 import 'package:rickmorty/layers/presentation/using_riverpod/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +13,7 @@ enum StateManagerOptions {
   provider,
   riverpod,
   getIt,
+  mobX,
 }
 
 late SharedPreferences sharedPref;
@@ -36,7 +38,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _current = StateManagerOptions.getIt;
+    _current = StateManagerOptions.mobX;
   }
 
   @override
@@ -46,8 +48,8 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       themeMode: ThemeMode.system,
-      home: _current == StateManagerOptions.getIt
-          ? const AppUsingGetIt()
+      home: _current == StateManagerOptions.mobX
+          ? const AppUsingMobX()
           : Container(),
     );
   }
