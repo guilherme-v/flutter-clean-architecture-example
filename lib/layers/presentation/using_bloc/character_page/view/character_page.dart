@@ -13,11 +13,10 @@ class CharacterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Create a BLOC using the usecase and provide it down to the widget tree
     return BlocProvider(
       create: (context) => CharacterPageBloc(
         getAllCharacters: context.read<GetAllCharacters>(),
-      ),
+      )..add(const FetchNextPageEvent()),
       child: const CharacterView(),
     );
   }
@@ -26,21 +25,8 @@ class CharacterPage extends StatelessWidget {
 // -----------------------------------------------------------------------------
 // View
 // -----------------------------------------------------------------------------
-class CharacterView extends StatefulWidget {
+class CharacterView extends StatelessWidget {
   const CharacterView({super.key});
-
-  @override
-  State<CharacterView> createState() => _CharacterViewState();
-}
-
-class _CharacterViewState extends State<CharacterView> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<CharacterPageBloc>().add(const FetchNextPageEvent());
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
