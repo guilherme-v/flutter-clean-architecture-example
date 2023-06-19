@@ -45,7 +45,7 @@ class _CharacterViewState extends State<CharacterView> {
   @override
   Widget build(BuildContext context) {
     final status = context.select((CharacterPageBloc b) => b.state.status);
-    return status == CharacterStatus.initial
+    return status == CharacterPageStatus.initial
         ? const Center(child: CircularProgressIndicator())
         : const _Content();
   }

@@ -2,31 +2,31 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
-import 'package:rickmorty/layers/presentation/using_bloc/character/bloc/character_page_bloc.dart';
+import 'package:rickmorty/layers/presentation/using_bloc/character_page/bloc/character_page_bloc.dart';
 
 import '../../../../../../fixtures/fixtures.dart';
 
 class MockGetAllCharacters extends Mock implements GetAllCharacters {}
 
 void main() {
-  late CharacterBloc characterBloc;
+  late CharacterPageBloc bloc;
   late GetAllCharacters getAllCharacters;
 
   setUp(() {
     getAllCharacters = MockGetAllCharacters();
-    characterBloc = CharacterBloc(getAllCharacters: getAllCharacters);
+    bloc = CharacterPageBloc(getAllCharacters: getAllCharacters);
   });
 
-  group('CharacterBloc', () {
+  group('CharacterPageBloc', () {
     test('initial state is correct', () {
-      final initial = CharacterBloc(getAllCharacters: getAllCharacters).state;
-      expect(initial, const CharacterState());
+      final initial = bloc.state;
+      expect(initial, const CharacterPageState());
     });
 
     group('.FetchNextPageEvent', () {
-      blocTest<CharacterBloc, CharacterState>(
-        'emits loading->success when FetchNextPageEvent is added and succeeds',
-        build: () => characterBloc,
+      blocTest<CharacterPageBloc, CharacterPageState>(
+        'emits loading->success',
+        build: () => bloc,
         setUp: () {
           when(() => getAllCharacters(page: 1)).thenAnswer(
             (_) async => characterList1,
@@ -34,11 +34,11 @@ void main() {
         },
         act: (bloc) => bloc..add(const FetchNextPageEvent()),
         expect: () => [
-          const CharacterState(
-            status: CharacterStatus.loading,
+          const CharacterPageState(
+            status: CharacterPageStatus.loading,
           ),
-          CharacterState(
-            status: CharacterStatus.success,
+          CharacterPageState(
+            status: CharacterPageStatus.success,
             characters: characterList1,
             hasReachedEnd: false,
             currentPage: 2,
@@ -46,9 +46,9 @@ void main() {
         ],
       );
 
-      blocTest<CharacterBloc, CharacterState>(
-        'emits a state with hasReachedEnd true when no items are available anymore',
-        build: () => characterBloc,
+      blocTest<CharacterPageBloc, CharacterPageState>(
+        'emits a state with hasReachedEnd true',
+        build: () => bloc,
         setUp: () {
           when(() => getAllCharacters(page: 1)).thenAnswer(
             (_) async => const [],
@@ -56,11 +56,11 @@ void main() {
         },
         act: (bloc) => bloc..add(const FetchNextPageEvent()),
         expect: () => [
-          const CharacterState(
-            status: CharacterStatus.loading,
+          const CharacterPageState(
+            status: CharacterPageStatus.loading,
           ),
-          const CharacterState(
-            status: CharacterStatus.success,
+          const CharacterPageState(
+            status: CharacterPageStatus.success,
             characters: [],
             hasReachedEnd: true,
             currentPage: 2,

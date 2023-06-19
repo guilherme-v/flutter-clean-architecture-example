@@ -1,27 +1,27 @@
 part of './character_page_bloc.dart';
 
-enum CharacterStatus { initial, loading, success, failure }
+enum CharacterPageStatus { initial, loading, success, failure }
 
-class CharacterState extends Equatable {
-  const CharacterState({
-    this.status = CharacterStatus.initial,
+class CharacterPageState extends Equatable {
+  const CharacterPageState({
+    this.status = CharacterPageStatus.initial,
     this.characters = const [],
     this.hasReachedEnd = false,
     this.currentPage = 1,
   });
 
-  final CharacterStatus status;
+  final CharacterPageStatus status;
   final List<Character> characters;
   final bool hasReachedEnd;
   final int currentPage;
 
-  CharacterState copyWith({
-    CharacterStatus? status,
+  CharacterPageState copyWith({
+    CharacterPageStatus? status,
     List<Character>? characters,
     bool? hasReachedEnd,
     int? currentPage,
   }) {
-    return CharacterState(
+    return CharacterPageState(
       status: status ?? this.status,
       characters: characters ?? this.characters,
       hasReachedEnd: hasReachedEnd ?? this.hasReachedEnd,
