@@ -3,23 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:rickmorty/layers/presentation/using_cubit/character/cubit/character_cubit.dart';
-import 'package:rickmorty/layers/presentation/using_cubit/character/view/character_page.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/character_page/cubit/character_page_cubit.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/character_page/view/character_page.dart';
 
 import '../../../../../fixtures/fixtures.dart';
 import '../../helper/pump_app.dart';
 
-class CharacterCubitMock extends MockCubit<CharacterState>
-    implements CharacterCubit {}
+class CharacterPageCubitMock extends MockCubit<CharacterPageState>
+    implements CharacterPageCubit {}
 
 void main() {
   group('CharacterPage', () {
     late GetAllCharactersMock getAllCharactersMock;
-    late CharacterCubit cubit;
+    late CharacterPageCubit cubit;
 
     setUp(() {
       getAllCharactersMock = GetAllCharactersMock();
-      cubit = CharacterCubitMock();
+      cubit = CharacterPageCubitMock();
 
       when(() => getAllCharactersMock.call(page: any(named: 'page')))
           .thenAnswer((_) async => [...characterList1, ...characterList2]);
@@ -42,9 +42,9 @@ void main() {
     testWidgets('renders a grid of Characters widgets', (tester) async {
       const key = Key('character_page_list_key');
       when(() => cubit.state).thenReturn(
-        CharacterState(
+        CharacterPageState(
           currentPage: 2,
-          status: CharacterStatus.success,
+          status: CharacterPageStatus.success,
           hasReachedEnd: false,
           characters: [...characterList1, ...characterList2],
         ),

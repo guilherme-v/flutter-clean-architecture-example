@@ -1,37 +1,37 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:rickmorty/layers/presentation/using_cubit/character/cubit/character_cubit.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/character_page/cubit/character_page_cubit.dart';
 
 import '../../../../../fixtures/fixtures.dart';
 import '../../helper/pump_app.dart';
 
 void main() {
-  group('CharacterCubit', () {
+  group('CharacterPageCubit', () {
     late GetAllCharactersMock getAllCharactersMock;
-    late CharacterCubit cubit;
+    late CharacterPageCubit cubit;
 
     setUp(() {
       getAllCharactersMock = GetAllCharactersMock();
-      cubit = CharacterCubit(getAllCharacters: getAllCharactersMock);
+      cubit = CharacterPageCubit(getAllCharacters: getAllCharactersMock);
     });
 
     test('should have correct initial state', () {
-      const expected = CharacterState(
+      const expected = CharacterPageState(
         characters: [],
         currentPage: 1,
-        status: CharacterStatus.initial,
+        status: CharacterPageStatus.initial,
         hasReachedEnd: false,
       );
 
       expect(
-        CharacterCubit(getAllCharacters: getAllCharactersMock).state,
+        CharacterPageCubit(getAllCharacters: getAllCharactersMock).state,
         expected,
       );
     });
 
     group('.FetchNextPageEvent', () {
-      blocTest<CharacterCubit, CharacterState>(
+      blocTest<CharacterPageCubit, CharacterPageState>(
         'emits loading->success when FetchNextPageEvent is added and succeeds',
         build: () => cubit,
         setUp: () {
@@ -41,11 +41,11 @@ void main() {
         },
         act: (cubit) => cubit.fetchNextPage(),
         expect: () => [
-          const CharacterState(
-            status: CharacterStatus.loading,
+          const CharacterPageState(
+            status: CharacterPageStatus.loading,
           ),
-          CharacterState(
-            status: CharacterStatus.success,
+          CharacterPageState(
+            status: CharacterPageStatus.success,
             characters: characterList1,
             hasReachedEnd: false,
             currentPage: 2,
@@ -53,7 +53,7 @@ void main() {
         ],
       );
 
-      blocTest<CharacterCubit, CharacterState>(
+      blocTest<CharacterPageCubit, CharacterPageState>(
         'emits a state with hasReachedEnd true when no items are available anymore',
         build: () => cubit,
         setUp: () {
@@ -61,11 +61,11 @@ void main() {
         },
         act: (cubit) => cubit.fetchNextPage(),
         expect: () => [
-          const CharacterState(
-            status: CharacterStatus.loading,
+          const CharacterPageState(
+            status: CharacterPageStatus.loading,
           ),
-          const CharacterState(
-            status: CharacterStatus.success,
+          const CharacterPageState(
+            status: CharacterPageStatus.success,
             characters: [],
             hasReachedEnd: true,
             currentPage: 2,

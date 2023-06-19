@@ -31,7 +31,7 @@ void main() {
         getAllCharacters: getAllCharactersMock,
       );
       // WidgetsBinding.instance.addPostFrameCallback((_) { ...
-      //  https://github.com/flutter/flutter/issues/11181
+      // https://github.com/flutter/flutter/issues/11181
       await tester.pumpAndSettle(const Duration(seconds: 1));
 
       expectLater(find.byType(CharacterView), findsOneWidget);
