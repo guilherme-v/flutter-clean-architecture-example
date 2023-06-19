@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
-import 'package:rickmorty/layers/presentation/using_cubit/character/cubit/character_cubit.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/character_page/cubit/character_page_cubit.dart';
 
 // -----------------------------------------------------------------------------
 // Page
@@ -14,7 +14,7 @@ class CharacterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: CharacterCubit(
+      value: CharacterPageCubit(
         getAllCharacters: context.read<GetAllCharacters>(),
       ),
       child: const CharacterView(),
@@ -37,14 +37,14 @@ class _CharacterViewState extends State<CharacterView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<CharacterCubit>().fetchNextPage();
+      context.read<CharacterPageCubit>().fetchNextPage();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final status = context.select((CharacterCubit c) => c.state.status);
-    return status == CharacterStatus.initial
+    final status = context.select((CharacterPageCubit c) => c.state.status);
+    return status == CharacterPageStatus.initial
         ? const Center(child: CircularProgressIndicator())
         : const _Content();
   }
@@ -71,8 +71,8 @@ class __ContentState extends State<_Content> {
 
   @override
   Widget build(BuildContext context) {
-    final list = context.select((CharacterCubit b) => b.state.characters);
-    final end = context.select((CharacterCubit b) => b.state.hasReachedEnd);
+    final list = context.select((CharacterPageCubit b) => b.state.characters);
+    final end = context.select((CharacterPageCubit b) => b.state.hasReachedEnd);
 
     final length = end
         ? list.length
@@ -119,7 +119,7 @@ class __ContentState extends State<_Content> {
 
   void _onScroll() {
     if (_isBottom) {
-      context.read<CharacterCubit>().fetchNextPage();
+      context.read<CharacterPageCubit>().fetchNextPage();
     }
   }
 

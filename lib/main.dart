@@ -4,7 +4,7 @@ import 'package:rickmorty/layers/data/source/local/local_storage.dart';
 import 'package:rickmorty/layers/data/source/network/api.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 import 'package:rickmorty/layers/presentation/theme.dart';
-import 'package:rickmorty/layers/presentation/using_bloc/app_using_bloc.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/app_using_cubit.dart';
 import 'package:rickmorty/layers/presentation/using_get_it/injector.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -67,7 +67,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       themeMode: ThemeMode.system,
       home: _current == StateManagerOptions.mobX
-          ? AppUsingBloc(getAllCharacters: _getAllCharacters)
+          ? AppUsingCubit(getAllCharacters: _getAllCharacters)
           : Container(),
     );
   }

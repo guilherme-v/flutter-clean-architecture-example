@@ -6,9 +6,11 @@ class HomePage extends StatelessWidget {
   const HomePage({
     super.key,
     required this.title,
+    required this.body,
   });
 
   final String title;
+  final Widget body;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      body: const CharacterPage(),
+      body: body,
     );
   }
 }
