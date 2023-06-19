@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:rickmorty/layers/presentation/using_bloc/character/bloc/character_bloc.dart';
+import 'package:rickmorty/layers/presentation/using_bloc/character/bloc/character_page_bloc.dart';
 import 'package:rickmorty/layers/presentation/using_bloc/character/view/character_page.dart';
 
 import '../../../../../../fixtures/fixtures.dart';

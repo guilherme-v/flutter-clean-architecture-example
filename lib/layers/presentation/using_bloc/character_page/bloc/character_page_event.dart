@@ -1,4 +1,4 @@
-part of 'character_bloc.dart';
+part of 'character_page_bloc.dart';
 
 sealed class CharacterEvent extends Equatable {
   const CharacterEvent();

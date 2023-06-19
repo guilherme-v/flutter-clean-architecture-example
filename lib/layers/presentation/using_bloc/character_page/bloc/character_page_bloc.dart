@@ -7,9 +7,9 @@ import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 import 'package:stream_transform/stream_transform.dart';
 
-part './character_event.dart';
+part './character_page_event.dart';
 
-part './character_state.dart';
+part './character_page_state.dart';
 
 EventTransformer<E> throttleDroppable<E>(Duration duration) {
   return (events, mapper) {
@@ -17,8 +17,8 @@ EventTransformer<E> throttleDroppable<E>(Duration duration) {
   };
 }
 
-class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
-  CharacterBloc({
+class CharacterPageBloc extends Bloc<CharacterEvent, CharacterState> {
+  CharacterPageBloc({
     required GetAllCharacters getAllCharacters,
   })  : _getAllCharacters = getAllCharacters,
         super(const CharacterState()) {

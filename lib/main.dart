@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rickmorty/layers/data/character_repository_impl.dart';
+import 'package:rickmorty/layers/data/source/local/local_storage.dart';
+import 'package:rickmorty/layers/data/source/network/api.dart';
+import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 import 'package:rickmorty/layers/presentation/theme.dart';
-import 'package:rickmorty/layers/presentation/using_get_it/app.dart';
+import 'package:rickmorty/layers/presentation/using_bloc/app_using_bloc.dart';
 import 'package:rickmorty/layers/presentation/using_get_it/injector.dart';
-import 'package:rickmorty/layers/presentation/using_mobx/app.dart';
-import 'package:rickmorty/layers/presentation/using_riverpod/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum StateManagerOptions {
@@ -22,6 +23,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharedPref = await SharedPreferences.getInstance();
   initializeGetIt();
+
   runApp(const MyApp());
 }
 
@@ -34,11 +36,27 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late StateManagerOptions _current;
+  late GetAllCharacters _getAllCharacters;
 
   @override
   void initState() {
     super.initState();
     _current = StateManagerOptions.mobX;
+
+    // Notice:
+    //
+    // Some state management packages are also D.I. (Dependency Injection)
+    // solutions. To avoid polluting this example with unnecessary repetition,
+    // we're creating the object instances here and passing them as parameters
+    // to each state management's "root" widgets. Then we'll use the library's
+    // specific D.I. widget to make the instance accessible to the rest of the
+    // widget tree.
+    //
+    final api = ApiImpl();
+    final localStorage = LocalStorageImpl(sharedPreferences: sharedPref);
+    final repo = CharacterRepositoryImpl(api: api, localStorage: localStorage);
+
+    _getAllCharacters = GetAllCharacters(repository: repo);
   }
 
   @override
@@ -49,7 +67,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       themeMode: ThemeMode.system,
       home: _current == StateManagerOptions.mobX
-          ? const AppUsingMobX()
+          ? AppUsingBloc(getAllCharacters: _getAllCharacters)
           : Container(),
     );
   }

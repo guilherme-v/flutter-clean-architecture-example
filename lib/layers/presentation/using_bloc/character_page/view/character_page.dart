@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
-import 'package:rickmorty/layers/presentation/using_bloc/character/bloc/character_bloc.dart';
+import 'package:rickmorty/layers/presentation/using_bloc/character_page/bloc/character_page_bloc.dart';
 
 // -----------------------------------------------------------------------------
 // Page
@@ -13,8 +13,9 @@ class CharacterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Create a BLOC using the usecase and provide it down to the widget tree
     return BlocProvider(
-      create: (context) => CharacterBloc(
+      create: (context) => CharacterPageBloc(
         getAllCharacters: context.read<GetAllCharacters>(),
       ),
       child: const CharacterView(),
@@ -37,13 +38,13 @@ class _CharacterViewState extends State<CharacterView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<CharacterBloc>().add(const FetchNextPageEvent());
+      context.read<CharacterPageBloc>().add(const FetchNextPageEvent());
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final status = context.select((CharacterBloc b) => b.state.status);
+    final status = context.select((CharacterPageBloc b) => b.state.status);
     return status == CharacterStatus.initial
         ? const Center(child: CircularProgressIndicator())
         : const _Content();
@@ -66,13 +67,13 @@ class __ContentState extends State<_Content> {
   @override
   void initState() {
     super.initState();
-    context.read<CharacterBloc>().add(const FetchNextPageEvent());
+    context.read<CharacterPageBloc>().add(const FetchNextPageEvent());
     _scrollController.addListener(_onScroll);
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = context.select((CharacterBloc b) => b.state);
+    final state = context.select((CharacterPageBloc b) => b.state);
     final list = state.characters;
     final hasReachedEnd = state.hasReachedEnd;
 
@@ -121,7 +122,7 @@ class __ContentState extends State<_Content> {
 
   void _onScroll() {
     if (_isBottom) {
-      context.read<CharacterBloc>().add(const FetchNextPageEvent());
+      context.read<CharacterPageBloc>().add(const FetchNextPageEvent());
     }
   }
 
