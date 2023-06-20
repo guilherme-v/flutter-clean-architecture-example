@@ -16,7 +16,7 @@ class CharacterPage extends StatelessWidget {
     return BlocProvider.value(
       value: CharacterPageCubit(
         getAllCharacters: context.read<GetAllCharacters>(),
-      ),
+      )..fetchNextPage(),
       child: const CharacterView(),
     );
   }
@@ -25,21 +25,8 @@ class CharacterPage extends StatelessWidget {
 // -----------------------------------------------------------------------------
 // View
 // -----------------------------------------------------------------------------
-class CharacterView extends StatefulWidget {
+class CharacterView extends StatelessWidget {
   const CharacterView({super.key});
-
-  @override
-  State<CharacterView> createState() => _CharacterViewState();
-}
-
-class _CharacterViewState extends State<CharacterView> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<CharacterPageCubit>().fetchNextPage();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,7 @@ import 'package:rickmorty/layers/presentation/using_cubit/app_using_cubit.dart';
 import 'package:rickmorty/layers/presentation/using_get_it/injector.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum StateManagerOptions {
+enum StateManagementOptions {
   bloc,
   cubit,
   provider,
@@ -35,13 +35,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late StateManagerOptions _current;
+  late StateManagementOptions _current;
   late GetAllCharacters _getAllCharacters;
 
   @override
   void initState() {
     super.initState();
-    _current = StateManagerOptions.mobX;
+    _current = StateManagementOptions.mobX;
 
     // Notice:
     //
@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       themeMode: ThemeMode.system,
-      home: _current == StateManagerOptions.mobX
+      home: _current == StateManagementOptions.mobX
           ? AppUsingCubit(getAllCharacters: _getAllCharacters)
           : Container(),
     );
