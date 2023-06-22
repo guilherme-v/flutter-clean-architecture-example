@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:rickmorty/layers/presentation/shared/character_card.dart';
 import 'package:rickmorty/layers/presentation/using_cubit/character_page/cubit/character_page_cubit.dart';
 import 'package:rickmorty/layers/presentation/using_cubit/character_page/view/character_page.dart';
 
@@ -34,7 +35,6 @@ void main() {
         const CharacterPage(),
         getAllCharacters: getAllCharactersMock,
       );
-      // await tester.pumpAndSettle(const Duration(seconds: 1));
 
       expect(find.byType(CharacterView), findsOneWidget);
     });
