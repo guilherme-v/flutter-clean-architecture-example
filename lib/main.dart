@@ -7,6 +7,7 @@ import 'package:rickmorty/layers/presentation/theme.dart';
 import 'package:rickmorty/layers/presentation/using_cubit/app_using_cubit.dart';
 import 'package:rickmorty/layers/presentation/using_get_it/app_using_get_it.dart';
 import 'package:rickmorty/layers/presentation/using_get_it/injector.dart';
+import 'package:rickmorty/layers/presentation/using_riverpod/app_using_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum StateManagementOptions {
@@ -69,7 +70,7 @@ class _MyAppState extends State<MyApp> {
       themeMode: ThemeMode.system,
       home: _current == StateManagementOptions.mobX
           // ? AppUsingCubit(getAllCharacters: _getAllCharacters)
-          ? const AppUsingGetIt()
+          ? const AppUsingRiverpod()
           : Container(),
     );
   }
