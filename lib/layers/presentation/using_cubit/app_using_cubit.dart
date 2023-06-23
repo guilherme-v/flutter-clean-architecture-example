@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
-import 'package:rickmorty/layers/presentation/using_cubit/character_page/view/character_page.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/view/character_page.dart';
 
 class AppUsingCubit extends StatelessWidget {
   const AppUsingCubit({super.key, required this.getAllCharacters});

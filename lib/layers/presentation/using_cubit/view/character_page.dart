@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 import 'package:rickmorty/layers/presentation/shared/character_card.dart';
-import 'package:rickmorty/layers/presentation/using_cubit/character_page/cubit/character_page_cubit.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/cubit/character_page_cubit.dart';
 
 // -----------------------------------------------------------------------------
 // Page

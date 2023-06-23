@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rickmorty/layers/presentation/shared/character_card.dart';
-import 'package:rickmorty/layers/presentation/using_cubit/character_page/cubit/character_page_cubit.dart';
-import 'package:rickmorty/layers/presentation/using_cubit/character_page/view/character_page.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/cubit/character_page_cubit.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/view/character_page.dart';
 
 import '../../../../../fixtures/fixtures.dart';
 import '../../helper/pump_app.dart';
