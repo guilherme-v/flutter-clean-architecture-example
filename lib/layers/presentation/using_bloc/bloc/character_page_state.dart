@@ -1,4 +1,4 @@
-part of './character_page_bloc.dart';
+part of 'character_page_bloc.dart';
 
 enum CharacterPageStatus { initial, loading, success, failure }
 
