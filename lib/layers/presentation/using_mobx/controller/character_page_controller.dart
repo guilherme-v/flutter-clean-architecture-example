@@ -4,7 +4,7 @@ import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 
 part 'character_page_controller.g.dart';
 
-enum Status { initial, loading, success, failed }
+enum CharacterPageStatus { initial, loading, success, failed }
 
 class CharacterPageController = _CharacterPageController
     with _$CharacterPageController;
@@ -17,7 +17,7 @@ abstract class _CharacterPageController with Store {
   final GetAllCharacters _getAllCharacters;
 
   @readonly
-  var _contentStatus = Status.initial;
+  var _contentStatus = CharacterPageStatus.initial;
 
   @readonly
   var _currentPage = 1;
@@ -31,13 +31,13 @@ abstract class _CharacterPageController with Store {
   Future<void> fetchNextPage() async {
     if (_hasReachedEnd) return;
 
-    _contentStatus = Status.loading;
+    _contentStatus = CharacterPageStatus.loading;
 
     final list = await _getAllCharacters(page: _currentPage);
 
     _currentPage++;
     charactersList.addAll(list);
-    _contentStatus = Status.success;
+    _contentStatus = CharacterPageStatus.success;
     _hasReachedEnd = list.isEmpty;
   }
 }

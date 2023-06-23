@@ -1,29 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:rickmorty/layers/data/character_repository_impl.dart';
-import 'package:rickmorty/layers/data/source/local/local_storage.dart';
-import 'package:rickmorty/layers/data/source/network/api.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
-import 'package:rickmorty/layers/presentation/theme.dart';
-import 'package:rickmorty/main.dart';
+
+import '../shared/home_page.dart';
 import 'view/character_page.dart';
 
 class AppUsingMobX extends StatelessWidget {
-  const AppUsingMobX({super.key});
+  const AppUsingMobX({super.key, required this.getAllCharacters});
+
+  final GetAllCharacters getAllCharacters;
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider(
-          create: (_) => GetAllCharacters(
-            repository: CharacterRepositoryImpl(
-              api: ApiImpl(),
-              localStorage: LocalStorageImpl(sharedPreferences: sharedPref),
-            ),
-          ),
-        ),
-      ],
+    // - Provides UseCases down to the widget tree using Bloc's D.I widget
+    // - Later we'll use it to instantiate each Controller (if needed)
+    return RepositoryProvider.value(
+      value: getAllCharacters,
       child: const AppView(),
     );
   }
@@ -34,80 +26,9 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
-      darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-      themeMode: ThemeMode.system,
-      home: const HomePage(title: "Rick & Morty"),
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  var currentIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context)
-        .textTheme
-        .apply(displayColor: Theme.of(context).colorScheme.onSurface);
-
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.onPrimary,
-        title: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Text(
-            widget.title,
-            style: textTheme.headlineSmall,
-          ),
-        ),
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: currentIndex,
-        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-        onDestinationSelected: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.person),
-            label: 'Character',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.location_history),
-            label: 'Location',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.tv),
-            label: 'Episode',
-          ),
-        ],
-      ),
-      body: <Widget>[
-        const CharacterPage(),
-        // Container(
-        //   color: Colors.red,
-        // ),
-        Container(
-          color: Colors.blue,
-        ),
-        Container(
-          color: Colors.orange,
-        ),
-      ][currentIndex],
+    return const HomePage(
+      title: "Rick & Morty - MobX",
+      body: CharacterPage(),
     );
   }
 }

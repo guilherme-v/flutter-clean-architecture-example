@@ -20,13 +20,13 @@ void main() {
     when(() => getAllCharactersMock.call(page: any(named: 'page')))
         .thenAnswer((_) async => mockCharacterList);
 
-    expect(controller.contentStatus, equals(Status.initial));
+    expect(controller.contentStatus, equals(CharacterPageStatus.initial));
 
     // Call the method under test
     await controller.fetchNextPage();
 
     // Verify the interactions and expected values
-    expect(controller.contentStatus, equals(Status.success));
+    expect(controller.contentStatus, equals(CharacterPageStatus.success));
     expect(controller.currentPage, equals(2));
     expect(controller.charactersList, equals(mockCharacterList));
     expect(controller.hasReachedEnd, isFalse);
@@ -40,13 +40,13 @@ void main() {
     // Set hasReachedEnd to true to simulate the end of the list
     // controller.hasReachedEnd = true;
 
-    expect(controller.contentStatus, equals(Status.initial));
+    expect(controller.contentStatus, equals(CharacterPageStatus.initial));
 
     // Call the method under test
     await controller.fetchNextPage();
 
     // Verify the interactions and expected values
-    expect(controller.contentStatus, equals(Status.success));
+    expect(controller.contentStatus, equals(CharacterPageStatus.success));
     expect(controller.currentPage, equals(2));
     expect(controller.charactersList, isEmpty);
     expect(controller.hasReachedEnd, isTrue);

@@ -12,16 +12,16 @@ mixin _$CharacterPageController on _CharacterPageController, Store {
   late final _$_contentStatusAtom =
       Atom(name: '_CharacterPageController._contentStatus', context: context);
 
-  Status get contentStatus {
+  CharacterPageStatus get contentStatus {
     _$_contentStatusAtom.reportRead();
     return super._contentStatus;
   }
 
   @override
-  Status get _contentStatus => contentStatus;
+  CharacterPageStatus get _contentStatus => contentStatus;
 
   @override
-  set _contentStatus(Status value) {
+  set _contentStatus(CharacterPageStatus value) {
     _$_contentStatusAtom.reportWrite(value, super._contentStatus, () {
       super._contentStatus = value;
     });
