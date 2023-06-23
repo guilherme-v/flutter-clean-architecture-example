@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 
-enum CharacterStatus { initial, loading, success, failed }
+enum CharacterPageStatus { initial, loading, success, failed }
 
-class CharacterChangeNotifier extends ChangeNotifier {
-  CharacterChangeNotifier({
+class CharacterPageChangeNotifier extends ChangeNotifier {
+  CharacterPageChangeNotifier({
     required GetAllCharacters getAllCharacters,
   }) : _getAllCharacters = getAllCharacters;
 
   final GetAllCharacters _getAllCharacters;
 
-  var _status = CharacterStatus.initial;
+  var _status = CharacterPageStatus.initial;
   get status => _status;
 
   final _characters = <Character>[];
@@ -26,13 +26,13 @@ class CharacterChangeNotifier extends ChangeNotifier {
   Future<void> fetchNextPage() async {
     if (_hasReachedEnd) return;
 
-    _status = CharacterStatus.loading;
+    _status = CharacterPageStatus.loading;
     notifyListeners();
 
     final list = await _getAllCharacters(page: _currentPage);
     _currentPage++;
     _characters.addAll(list);
-    _status = CharacterStatus.success;
+    _status = CharacterPageStatus.success;
     _hasReachedEnd = list.isEmpty;
     notifyListeners();
   }

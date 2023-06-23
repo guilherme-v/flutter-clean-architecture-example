@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
-import 'package:rickmorty/layers/presentation/using_provider/change_notifier/character_change_notifier.dart';
+import 'package:rickmorty/layers/presentation/using_provider/change_notifier/character_page_change_notifier.dart';
 
 // -----------------------------------------------------------------------------
 // Page
@@ -15,7 +15,7 @@ class CharacterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final useCase = context.read<GetAllCharacters>();
     return ChangeNotifierProvider(
-      create: (_) => CharacterChangeNotifier(getAllCharacters: useCase),
+      create: (_) => CharacterPageChangeNotifier(getAllCharacters: useCase),
       child: const CharacterView(),
     );
   }
@@ -36,14 +36,14 @@ class _CharacterViewState extends State<CharacterView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<CharacterChangeNotifier>().fetchNextPage();
+      context.read<CharacterPageChangeNotifier>().fetchNextPage();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final status = context.select((CharacterChangeNotifier c) => c.status);
-    return status == CharacterStatus.initial
+    final status = context.select((CharacterPageChangeNotifier c) => c.status);
+    return status == CharacterPageStatus.initial
         ? const Center(child: CircularProgressIndicator())
         : const _Content();
   }
@@ -70,8 +70,8 @@ class __ContentState extends State<_Content> {
 
   @override
   Widget build(BuildContext context) {
-    final list = context.select((CharacterChangeNotifier b) => b.characters);
-    final end = context.select((CharacterChangeNotifier b) => b.hasReachedEnd);
+    final list = context.select((CharacterPageChangeNotifier b) => b.characters);
+    final end = context.select((CharacterPageChangeNotifier b) => b.hasReachedEnd);
 
     final length = end
         ? list.length
@@ -118,7 +118,7 @@ class __ContentState extends State<_Content> {
 
   void _onScroll() {
     if (_isBottom) {
-      context.read<CharacterChangeNotifier>().fetchNextPage();
+      context.read<CharacterPageChangeNotifier>().fetchNextPage();
     }
   }
 

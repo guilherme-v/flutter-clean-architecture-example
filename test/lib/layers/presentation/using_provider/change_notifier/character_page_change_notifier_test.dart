@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:rickmorty/layers/presentation/using_provider/change_notifier/character_change_notifier.dart';
+import 'package:rickmorty/layers/presentation/using_provider/change_notifier/character_page_change_notifier.dart';
 
 import '../../../../../fixtures/fixtures.dart';
 import '../../helper/pump_app.dart';
@@ -8,14 +8,14 @@ import '../../helper/pump_app.dart';
 void main() {
   group('CharacterChangeNotifier', () {
     late GetAllCharactersMock getAllCharactersMock;
-    late CharacterChangeNotifier characterChangeNotifier;
+    late CharacterPageChangeNotifier characterChangeNotifier;
 
     setUp(() {
       getAllCharactersMock = GetAllCharactersMock();
     });
 
     test('fetchNextPage updates state correctly', () async {
-      characterChangeNotifier = CharacterChangeNotifier(
+      characterChangeNotifier = CharacterPageChangeNotifier(
         getAllCharacters: getAllCharactersMock,
       );
 
@@ -23,7 +23,7 @@ void main() {
           .thenAnswer((_) async => [...characterList1, ...characterList2]);
 
       // Set up the initial state
-      expect(characterChangeNotifier.status, equals(CharacterStatus.initial));
+      expect(characterChangeNotifier.status, equals(CharacterPageStatus.initial));
 
       // Set up the response from getAllCharacters
       final page = characterChangeNotifier.currentPage;
@@ -31,7 +31,7 @@ void main() {
       await characterChangeNotifier.fetchNextPage();
 
       // Verify that the state is updated correctly
-      expect(characterChangeNotifier.status, equals(CharacterStatus.success));
+      expect(characterChangeNotifier.status, equals(CharacterPageStatus.success));
       expect(characterChangeNotifier.currentPage, equals(page + 1));
       expect(
         characterChangeNotifier.characters,
@@ -45,7 +45,7 @@ void main() {
     test('fetchNextPage does not update state when hasReachedEnd is true',
         () async {
       // Set up the initial state with hasReachedEnd = true
-      characterChangeNotifier = CharacterChangeNotifier(
+      characterChangeNotifier = CharacterPageChangeNotifier(
         getAllCharacters: getAllCharactersMock,
       );
 
@@ -56,7 +56,7 @@ void main() {
       await characterChangeNotifier.fetchNextPage();
 
       // Verify that the state remains unchanged
-      expect(characterChangeNotifier.status, equals(CharacterStatus.success));
+      expect(characterChangeNotifier.status, equals(CharacterPageStatus.success));
       expect(characterChangeNotifier.currentPage, equals(2));
       expect(characterChangeNotifier.characters, isEmpty);
       expect(characterChangeNotifier.hasReachedEnd, equals(true));
