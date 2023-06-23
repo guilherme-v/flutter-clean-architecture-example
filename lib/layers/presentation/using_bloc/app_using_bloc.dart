@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
-import 'package:rickmorty/layers/presentation/shared/home_page.dart';
 import 'package:rickmorty/layers/presentation/using_bloc/character_page/view/character_page.dart';
 
 class AppUsingBloc extends StatelessWidget {
@@ -26,9 +25,6 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const HomePage(
-      title: "Rick & Morty - BLoc",
-      body: CharacterPage(),
-    );
+    return const CharacterPage();
   }
 }

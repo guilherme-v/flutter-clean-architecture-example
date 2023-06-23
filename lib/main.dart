@@ -4,9 +4,12 @@ import 'package:rickmorty/layers/data/source/local/local_storage.dart';
 import 'package:rickmorty/layers/data/source/network/api.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 import 'package:rickmorty/layers/presentation/theme.dart';
+import 'package:rickmorty/layers/presentation/using_bloc/app_using_bloc.dart';
 import 'package:rickmorty/layers/presentation/using_cubit/app_using_cubit.dart';
 import 'package:rickmorty/layers/presentation/using_get_it/app_using_get_it.dart';
 import 'package:rickmorty/layers/presentation/using_get_it/injector.dart';
+import 'package:rickmorty/layers/presentation/using_mobx/app_using_mobx.dart';
+import 'package:rickmorty/layers/presentation/using_provider/app_using_provider.dart';
 import 'package:rickmorty/layers/presentation/using_riverpod/app_using_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,13 +40,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late StateManagementOptions _current;
+  late StateManagementOptions _currentOption;
   late GetAllCharacters _getAllCharacters;
 
   @override
   void initState() {
     super.initState();
-    _current = StateManagementOptions.mobX;
+    _currentOption = StateManagementOptions.bloc;
 
     // Notice:
     //
@@ -68,10 +71,124 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       themeMode: ThemeMode.system,
-      home: _current == StateManagementOptions.mobX
-          // ? AppUsingCubit(getAllCharacters: _getAllCharacters)
-          ? const AppUsingRiverpod()
-          : Container(),
+      home: Builder(
+        builder: (context) {
+          final textTheme = Theme.of(context)
+              .textTheme
+              .apply(displayColor: Theme.of(context).colorScheme.onSurface);
+
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).colorScheme.onPrimary,
+              title: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  _getTitle(_currentOption),
+                  style: textTheme.headlineSmall,
+                ),
+              ),
+              actions: [
+                PopupMenuButton<StateManagementOptions>(
+                  itemBuilder: (context) => [
+                    _createMenuEntry(
+                      StateManagementOptions.bloc,
+                      'Bloc',
+                    ),
+                    _createMenuEntry(
+                      StateManagementOptions.cubit,
+                      'Cubit',
+                    ),
+                    _createMenuEntry(
+                      StateManagementOptions.mobX,
+                      'MobX',
+                    ),
+                    _createMenuEntry(
+                      StateManagementOptions.getIt,
+                      'GetIT',
+                    ),
+                    _createMenuEntry(
+                      StateManagementOptions.provider,
+                      'Provider',
+                    ),
+                    _createMenuEntry(
+                      StateManagementOptions.riverpod,
+                      'Riverpod',
+                    ),
+                  ],
+                  onSelected: (value) {
+                    setState(() {
+                      _currentOption = value;
+                    });
+                  },
+                ),
+              ],
+            ),
+            body: _getBody(_currentOption, _getAllCharacters),
+          );
+        },
+      ),
+    );
+  }
+
+  String _getTitle(StateManagementOptions option) {
+    switch (option) {
+      case (StateManagementOptions.bloc):
+        return 'Rick & Morty - BLOC';
+      case (StateManagementOptions.cubit):
+        return 'Rick & Morty - Cubit';
+      case (StateManagementOptions.mobX):
+        return 'Rick & Morty - Mobx';
+      case (StateManagementOptions.getIt):
+        return 'Rick & Morty - GetIt';
+      case (StateManagementOptions.provider):
+        return 'Rick & Morty - Provider';
+      case (StateManagementOptions.riverpod):
+        return 'Rick & Morty - Riverpod';
+      default:
+        return 'Invalid option';
+    }
+  }
+
+  Widget _getBody(
+    StateManagementOptions option,
+    GetAllCharacters getAllCharacters,
+  ) {
+    switch (option) {
+      case (StateManagementOptions.bloc):
+        return AppUsingBloc(getAllCharacters: getAllCharacters);
+      case (StateManagementOptions.cubit):
+        return AppUsingCubit(getAllCharacters: getAllCharacters);
+      case (StateManagementOptions.mobX):
+        return AppUsingMobX(getAllCharacters: getAllCharacters);
+      case (StateManagementOptions.getIt):
+        return const AppUsingGetIt();
+      case (StateManagementOptions.provider):
+        return AppUsingProvider(getAllCharacters: getAllCharacters);
+      case (StateManagementOptions.riverpod):
+        return const AppUsingRiverpod();
+      default:
+        return Container();
+    }
+  }
+
+  PopupMenuItem<StateManagementOptions> _createMenuEntry(
+    StateManagementOptions option,
+    String text,
+  ) {
+    final isSelected = _currentOption == option;
+    final textTheme = Theme.of(context)
+        .textTheme
+        .apply(displayColor: Theme.of(context).colorScheme.onSurface);
+
+    return PopupMenuItem<StateManagementOptions>(
+      value: option,
+      child: Text(
+        isSelected ? 'using $text' : 'use $text',
+        style: textTheme.bodyMedium!.copyWith(
+          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+          color: isSelected ? Colors.red : Colors.black,
+        ),
+      ),
     );
   }
 }

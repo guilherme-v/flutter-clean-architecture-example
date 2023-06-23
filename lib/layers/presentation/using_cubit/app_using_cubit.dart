@@ -27,9 +27,6 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const HomePage(
-      title: "Rick & Morty - Cubit",
-      body: CharacterPage(),
-    );
+    return const CharacterPage();
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
-import 'package:rickmorty/layers/presentation/shared/home_page.dart';
 import 'package:rickmorty/layers/presentation/using_provider/view/character_page.dart';
 
 class AppUsingProvider extends StatelessWidget {
@@ -27,9 +26,6 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const HomePage(
-      title: "Rick & Morty - Provider",
-      body: CharacterPage(),
-    );
+    return const CharacterPage();
   }
 }
