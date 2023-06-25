@@ -52,6 +52,7 @@ dependencies:
   get_it: ^7.6.0
   get_it_mixin: ^4.2.0
   flutter_mobx: ^2.0.6+5
+  flutter_animate: ^4.2.0
 
 dev_dependencies:
   flutter_test:
@@ -110,3 +111,13 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Exo
+      fonts:
+        - asset: assets/fonts/Exo-Bold.ttf
+        - asset: assets/fonts/Exo-Medium.ttf
+  assets:
+    - assets/images/
+    - assets/fonts/
+  shaders:
+    - assets/shaders/ui_glitch.frag
