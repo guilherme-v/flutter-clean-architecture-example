@@ -3,8 +3,8 @@ import 'package:rickmorty/layers/data/character_repository_impl.dart';
 import 'package:rickmorty/layers/data/source/local/local_storage.dart';
 import 'package:rickmorty/layers/data/source/network/api.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
-import 'package:rickmorty/layers/presentation/ui_effects/app_title.dart';
-import 'package:rickmorty/layers/presentation/ui_effects/fg_app_stack.dart';
+import 'package:rickmorty/layers/presentation/shared/app_title.dart';
+import 'package:rickmorty/layers/presentation/shared/fg_app_stack.dart';
 import 'package:rickmorty/layers/presentation/using_bloc/app_using_bloc.dart';
 import 'package:rickmorty/layers/presentation/using_cubit/app_using_cubit.dart';
 import 'package:rickmorty/layers/presentation/using_get_it/app_using_get_it.dart';
@@ -77,7 +77,7 @@ class _AppRootState extends State<AppRoot> {
   }
 
   // ---------------------------------------------------------------------------
-  // Helpers
+  // _Helpers
   // ---------------------------------------------------------------------------
 
   Widget _getAppUsing({required StateManagementOptions stateManagement}) {

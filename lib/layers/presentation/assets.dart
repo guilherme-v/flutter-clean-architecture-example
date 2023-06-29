@@ -25,17 +25,17 @@ class Asset {
   // Shaders
   // ---------------------------------------------------------------------------
   static const String _shaders = 'assets/shaders';
-  static const String orbShader = '$_shaders/orb_shader.frag';
   static const String uiShader = '$_shaders/ui_glitch.frag';
 }
 
-typedef Shaders = ({FragmentShader orb, FragmentShader ui});
+// -----------------------------------------------------------------------------
+// Fragments
+// -----------------------------------------------------------------------------
+typedef FragmentPrograms = ({FragmentProgram ui});
 
-Future<Shaders> loadShaders() async => (
-      orb: (await _loadShader(Asset.orbShader)),
-      ui: (await _loadShader(Asset.uiShader)),
-    );
+Future<FragmentPrograms> loadFragmentPrograms() async =>
+    (ui: (await _loadFragmentProgram(Asset.uiShader)),);
 
-Future<FragmentShader> _loadShader(String path) async {
-  return (await FragmentProgram.fromAsset(path)).fragmentShader();
+Future<FragmentProgram> _loadFragmentProgram(String path) async {
+  return (await FragmentProgram.fromAsset(path));
 }
