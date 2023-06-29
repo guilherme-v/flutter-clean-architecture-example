@@ -30,7 +30,7 @@ class CharacterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final status = context.select((CharacterPageBloc b) => b.state.status);
-    return status == CharacterPageStatus.initial
+    return status != CharacterPageStatus.success
         ? const Center(child: CircularProgressIndicator())
         : const _Content();
   }
@@ -40,7 +40,7 @@ class CharacterView extends StatelessWidget {
 // Content
 // -----------------------------------------------------------------------------
 class _Content extends StatefulWidget {
-  const _Content({super.key});
+  const _Content();
 
   @override
   State<_Content> createState() => __ContentState();
@@ -58,6 +58,7 @@ class __ContentState extends State<_Content> {
   @override
   Widget build(BuildContext context) {
     final state = context.select((CharacterPageBloc b) => b.state);
+
     final list = state.characters;
     final hasReachedEnd = state.hasReachedEnd;
 
@@ -67,32 +68,30 @@ class __ContentState extends State<_Content> {
             ? list.length + 1
             : list.length + 2;
 
-    return Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-          child: GridView.builder(
-            key: const Key('character_page_list_key'),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // Adjust the number of columns here
-              childAspectRatio: 1 / 1.36,
-              crossAxisSpacing: 4,
-            ),
-            padding: const EdgeInsets.all(8),
-            controller: _scrollController,
-            itemCount: length,
-            itemBuilder: (context, index) {
-              if (index < list.length) {
-                final char = list[index];
-                return CharacterCard(char: char);
-              }
-              return hasReachedEnd
-                  ? const SizedBox()
-                  : const Center(child: CircularProgressIndicator());
-            },
-          ),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+      child: GridView.builder(
+        physics: const BouncingScrollPhysics(),
+        key: const Key('character_page_list_key'),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // Adjust the number of columns here
+          childAspectRatio: 1 / 1.32,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 8,
         ),
-      ],
+        padding: const EdgeInsets.all(24),
+        controller: _scrollController,
+        itemCount: length,
+        itemBuilder: (context, index) {
+          if (index < list.length) {
+            final char = list[index];
+            return CharacterCard(character: char);
+          }
+          return hasReachedEnd
+              ? const SizedBox()
+              : const Center(child: CircularProgressIndicator());
+        },
+      ),
     );
   }
 
