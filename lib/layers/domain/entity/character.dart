@@ -45,4 +45,6 @@ class Character with EquatableMixin {
         url,
         created,
       ];
+
+  bool get isAlive => status == 'Alive';
 }
