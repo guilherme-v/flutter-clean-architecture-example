@@ -40,7 +40,7 @@ class CharacterView extends StatelessWidget {
 // Content
 // -----------------------------------------------------------------------------
 class _Content extends StatefulWidget {
-  const _Content();
+  const _Content({super.key});
 
   @override
   State<_Content> createState() => __ContentState();
@@ -57,29 +57,26 @@ class __ContentState extends State<_Content> {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.select((CharacterPageBloc b) => b.state);
+    final list = context.select((CharacterPageBloc b) => b.state.characters);
+    final end = context.select((CharacterPageBloc b) => b.state.hasReachedEnd);
 
-    final list = state.characters;
-    final hasReachedEnd = state.hasReachedEnd;
-
-    final length = hasReachedEnd
+    final length = end
         ? list.length
         : list.length % 2 == 0
             ? list.length + 1
             : list.length + 2;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+      padding: const EdgeInsets.all(8.0),
       child: GridView.builder(
         physics: const BouncingScrollPhysics(),
         key: const Key('character_page_list_key'),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2, // Adjust the number of columns here
-          childAspectRatio: 1 / 1.32,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 8,
+          childAspectRatio: 1 / 1.26,
+          crossAxisSpacing: 16,
         ),
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(8),
         controller: _scrollController,
         itemCount: length,
         itemBuilder: (context, index) {
@@ -87,7 +84,7 @@ class __ContentState extends State<_Content> {
             final char = list[index];
             return CharacterCard(character: char);
           }
-          return hasReachedEnd
+          return end
               ? const SizedBox()
               : const Center(child: CircularProgressIndicator());
         },

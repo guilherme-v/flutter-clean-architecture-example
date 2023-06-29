@@ -6,7 +6,6 @@ import 'package:rickmorty/layers/presentation/using_bloc/bloc/character_page_blo
 
 import '../../../../../fixtures/fixtures.dart';
 
-
 class MockGetAllCharacters extends Mock implements GetAllCharacters {}
 
 void main() {

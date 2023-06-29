@@ -23,7 +23,8 @@ void main() {
           .thenAnswer((_) async => [...characterList1, ...characterList2]);
 
       // Set up the initial state
-      expect(characterChangeNotifier.status, equals(CharacterPageStatus.initial));
+      expect(
+          characterChangeNotifier.status, equals(CharacterPageStatus.initial));
 
       // Set up the response from getAllCharacters
       final page = characterChangeNotifier.currentPage;
@@ -31,7 +32,8 @@ void main() {
       await characterChangeNotifier.fetchNextPage();
 
       // Verify that the state is updated correctly
-      expect(characterChangeNotifier.status, equals(CharacterPageStatus.success));
+      expect(
+          characterChangeNotifier.status, equals(CharacterPageStatus.success));
       expect(characterChangeNotifier.currentPage, equals(page + 1));
       expect(
         characterChangeNotifier.characters,
@@ -56,7 +58,8 @@ void main() {
       await characterChangeNotifier.fetchNextPage();
 
       // Verify that the state remains unchanged
-      expect(characterChangeNotifier.status, equals(CharacterPageStatus.success));
+      expect(
+          characterChangeNotifier.status, equals(CharacterPageStatus.success));
       expect(characterChangeNotifier.currentPage, equals(2));
       expect(characterChangeNotifier.characters, isEmpty);
       expect(characterChangeNotifier.hasReachedEnd, equals(true));

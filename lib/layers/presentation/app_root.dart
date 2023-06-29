@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:rickmorty/layers/data/character_repository_impl.dart';
 import 'package:rickmorty/layers/data/source/local/local_storage.dart';
 import 'package:rickmorty/layers/data/source/network/api.dart';
@@ -51,27 +52,30 @@ class _AppRootState extends State<AppRoot> {
       themeMode: ThemeMode.system,
       home: FgAppStack(
         body: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
             backgroundColor: Colors.transparent,
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              title: const AppTitle(),
-              actions: [
-                PopupMenuButton<StateManagementOptions>(
-                  onSelected: (value) => setState(() {
-                    _currentOption = value;
-                  }),
-                  itemBuilder: (context) => [
-                    _menuEntry(StateManagementOptions.bloc, 'Bloc'),
-                    _menuEntry(StateManagementOptions.cubit, 'Cubit'),
-                    _menuEntry(StateManagementOptions.mobX, 'MobX'),
-                    _menuEntry(StateManagementOptions.getIt, 'GetIT'),
-                    _menuEntry(StateManagementOptions.provider, 'Provider'),
-                    _menuEntry(StateManagementOptions.riverpod, 'Riverpod'),
-                  ],
-                ),
-              ],
-            ),
-            body: _getAppUsing(stateManagement: _currentOption)),
+            title: AppTitle(stateManagement: getTitleToOption(_currentOption)),
+            actions: [
+              PopupMenuButton<StateManagementOptions>(
+                onSelected: (value) => setState(() {
+                  _currentOption = value;
+                }),
+                itemBuilder: (context) => [
+                  _menuEntry(StateManagementOptions.bloc, 'Bloc'),
+                  _menuEntry(StateManagementOptions.cubit, 'Cubit'),
+                  _menuEntry(StateManagementOptions.mobX, 'MobX'),
+                  _menuEntry(StateManagementOptions.getIt, 'GetIT'),
+                  _menuEntry(StateManagementOptions.provider, 'Provider'),
+                  _menuEntry(StateManagementOptions.riverpod, 'Riverpod'),
+                ],
+              ),
+            ],
+          ),
+          body: _getAppUsing(stateManagement: _currentOption)
+              .animate()
+              .fadeIn(delay: 1.2.seconds, duration: .7.seconds),
+        ),
       ),
     );
   }
@@ -118,5 +122,24 @@ class _AppRootState extends State<AppRoot> {
         ),
       ),
     );
+  }
+
+  String getTitleToOption(StateManagementOptions option) {
+    switch (option) {
+      case (StateManagementOptions.bloc):
+        return 'BLOC';
+      case (StateManagementOptions.cubit):
+        return 'Cubit';
+      case (StateManagementOptions.mobX):
+        return 'MobX';
+      case (StateManagementOptions.getIt):
+        return 'GetIT';
+      case (StateManagementOptions.provider):
+        return 'Provider';
+      case (StateManagementOptions.riverpod):
+        return 'RiverPode';
+      default:
+        return '';
+    }
   }
 }

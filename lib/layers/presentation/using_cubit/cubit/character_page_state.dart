@@ -31,9 +31,9 @@ class CharacterPageState extends Equatable {
 
   @override
   List<Object> get props => [
-    status,
-    characters,
-    hasReachedEnd,
-    currentPage,
-  ];
+        status,
+        characters,
+        hasReachedEnd,
+        currentPage,
+      ];
 }

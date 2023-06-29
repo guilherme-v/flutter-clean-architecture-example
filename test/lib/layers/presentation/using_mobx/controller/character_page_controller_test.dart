@@ -11,7 +11,8 @@ void main() {
 
   setUp(() {
     getAllCharactersMock = GetAllCharactersMock();
-    controller = CharacterPageController(getAllCharacters: getAllCharactersMock);
+    controller =
+        CharacterPageController(getAllCharacters: getAllCharactersMock);
   });
 
   test('fetchNextPage success', () async {
