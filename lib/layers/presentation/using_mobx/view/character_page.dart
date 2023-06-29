@@ -104,7 +104,7 @@ class __ContentState extends State<_Content> {
                 itemBuilder: (context, index) {
                   if (index < list.length) {
                     final char = list[index];
-                    return CharacterCard(char: char);
+                    return CharacterCard(character: char);
                   }
                   return end
                       ? const SizedBox()
