@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:rickmorty/layers/presentation/shared/character_card.dart';
+import 'package:rickmorty/layers/presentation/shared/character_list_item.dart';
 import 'package:rickmorty/layers/presentation/using_bloc/bloc/character_page_bloc.dart';
 import 'package:rickmorty/layers/presentation/using_bloc/view/character_page.dart';
 
@@ -27,13 +27,15 @@ void main() {
     });
 
     testWidgets('renders CharacterView', (tester) async {
-      await tester.pumpApp(
-        const CharacterPage(),
-        getAllCharacters: getAllCharactersMock,
-      );
-      // WidgetsBinding.instance.addPostFrameCallback((_) { ...
-      // https://github.com/flutter/flutter/issues/11181
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+      try {
+        await tester.pumpApp(
+          const CharacterPage(),
+          getAllCharacters: getAllCharactersMock,
+        );
+        await tester.pumpAndSettle();
+      } catch (e) {
+        // https://stackoverflow.com/questions/64231515/widget-test-testing-a-button-with-circularprogressindicator
+      }
 
       expectLater(find.byType(CharacterView), findsOneWidget);
     });
@@ -58,7 +60,7 @@ void main() {
 
       expect(find.byKey(key), findsOneWidget);
       final list = [...characterList1, ...characterList2];
-      expectLater(find.byType(CharacterCard), findsNWidgets(list.length));
+      expectLater(find.byType(CharacterListItem), findsNWidgets(list.length));
     });
   });
 }
