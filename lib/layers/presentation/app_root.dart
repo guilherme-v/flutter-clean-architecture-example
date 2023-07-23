@@ -4,8 +4,7 @@ import 'package:rickmorty/layers/data/character_repository_impl.dart';
 import 'package:rickmorty/layers/data/source/local/local_storage.dart';
 import 'package:rickmorty/layers/data/source/network/api.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
-import 'package:rickmorty/layers/presentation/shared/app_title.dart';
-import 'package:rickmorty/layers/presentation/shared/fg_app_stack.dart';
+import 'package:rickmorty/layers/presentation/theme.dart';
 import 'package:rickmorty/layers/presentation/using_bloc/app_using_bloc.dart';
 import 'package:rickmorty/layers/presentation/using_cubit/app_using_cubit.dart';
 import 'package:rickmorty/layers/presentation/using_get_it/app_using_get_it.dart';
@@ -24,6 +23,7 @@ class AppRoot extends StatefulWidget {
 class _AppRootState extends State<AppRoot> {
   late StateManagementOptions _currentOption;
   late GetAllCharacters _getAllCharacters;
+  var themeMode = ThemeMode.system;
 
   @override
   void initState() {
@@ -48,15 +48,34 @@ class _AppRootState extends State<AppRoot> {
 
   @override
   Widget build(BuildContext context) {
+    const theme = CustomTheme();
+
     return MaterialApp(
-      themeMode: ThemeMode.system,
-      home: FgAppStack(
-        body: Scaffold(
-          backgroundColor: Colors.transparent,
+      themeMode: themeMode,
+      theme: theme.toThemeData(),
+      darkTheme: theme.toThemeDataDark(),
+      debugShowCheckedModeBanner: false,
+      home: Builder(builder: (context) {
+        final tt = Theme.of(context).textTheme;
+        final cs = Theme.of(context).colorScheme;
+        return Scaffold(
+          extendBodyBehindAppBar: true,
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            title: AppTitle(stateManagement: getTitleToOption(_currentOption)),
+            title: Text(
+              'Rick & Morty\n(${getTitleToOption(_currentOption)})',
+              style: tt.headlineLarge!.copyWith(
+                color: cs.onSurfaceVariant,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             actions: [
+              IconButton(
+                onPressed: () {
+                  final useLight = themeMode == ThemeMode.dark ? true : false;
+                  handleBrightnessChange(useLight);
+                },
+                icon: const Icon(Icons.light_mode),
+              ),
               PopupMenuButton<StateManagementOptions>(
                 onSelected: (value) => setState(() {
                   _currentOption = value;
@@ -75,8 +94,8 @@ class _AppRootState extends State<AppRoot> {
           body: _getAppUsing(stateManagement: _currentOption)
               .animate()
               .fadeIn(delay: 1.2.seconds, duration: .7.seconds),
-        ),
-      ),
+        );
+      }),
     );
   }
 
@@ -141,5 +160,23 @@ class _AppRootState extends State<AppRoot> {
       default:
         return '';
     }
+  }
+
+  bool get useLightMode {
+    switch (themeMode) {
+      case ThemeMode.system:
+        return View.of(context).platformDispatcher.platformBrightness ==
+            Brightness.light;
+      case ThemeMode.light:
+        return true;
+      case ThemeMode.dark:
+        return false;
+    }
+  }
+
+  void handleBrightnessChange(bool useLightMode) {
+    setState(() {
+      themeMode = useLightMode ? ThemeMode.light : ThemeMode.dark;
+    });
   }
 }
