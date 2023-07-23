@@ -53,6 +53,8 @@ dependencies:
   get_it_mixin: ^4.2.0
   flutter_mobx: ^2.0.6+5
   flutter_animate: ^4.2.0
+  material_color_utilities: ^0.2.0
+  google_fonts: ^5.1.0
 
 dev_dependencies:
   flutter_test:
