@@ -61,13 +61,16 @@ class _AppRootState extends State<AppRoot> {
         return Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-            title: Text(
-              'Rick & Morty\n(${getTitleToOption(_currentOption)})',
-              style: tt.headlineLarge!.copyWith(
-                color: cs.onSurfaceVariant,
-                fontWeight: FontWeight.bold,
+            title: Transform.translate(
+              offset: const Offset(10, 0),
+              child: Text(
+                'Rick & Morty\n(${getTitleToOption(_currentOption)})',
+                style: tt.headlineLarge!.copyWith(
+                  color: cs.onSurfaceVariant,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
+            ).animate().fadeIn(delay: .8.seconds, duration: .7.seconds),
             actions: [
               IconButton(
                 onPressed: () {

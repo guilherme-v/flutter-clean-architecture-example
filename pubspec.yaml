@@ -119,7 +119,4 @@ flutter:
         - asset: assets/fonts/Exo-Bold.ttf
         - asset: assets/fonts/Exo-Medium.ttf
   assets:
-    - assets/images/
     - assets/fonts/
-  shaders:
-    - assets/shaders/ui_glitch.frag
