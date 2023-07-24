@@ -23,7 +23,7 @@ class AppRoot extends StatefulWidget {
 class _AppRootState extends State<AppRoot> {
   late StateManagementOptions _currentOption;
   late GetAllCharacters _getAllCharacters;
-  var themeMode = ThemeMode.system;
+  var themeMode = ThemeMode.dark;
 
   @override
   void initState() {
