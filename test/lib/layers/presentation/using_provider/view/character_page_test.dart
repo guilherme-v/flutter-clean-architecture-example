@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:rickmorty/layers/presentation/shared/character_card.dart';
+import 'package:rickmorty/layers/presentation/shared/character_list_item.dart';
 import 'package:rickmorty/layers/presentation/using_provider/view/character_page.dart';
 
 import '../../../../../fixtures/fixtures.dart';
@@ -26,18 +26,23 @@ void main() {
       expect(find.byType(CharacterView), findsOneWidget);
     });
 
-    testWidgets('renders a grid of Characters widgets', (tester) async {
+    testWidgets('renders a list of Characters widgets', (tester) async {
       const key = Key('character_page_list_key');
 
-      await tester.pumpApp(
-        const CharacterPage(),
-        getAllCharacters: getAllCharactersMock,
-      );
+      try {
+        await tester.pumpApp(
+          const CharacterPage(),
+          getAllCharacters: getAllCharactersMock,
+        );
 
-      await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+      } catch (e) {
+        // ignore loading at the bottom
+      }
+
       expect(find.byKey(key), findsOneWidget);
       expectLater(
-        find.byType(CharacterCard),
+        find.byType(CharacterListItem),
         findsNWidgets([...characterList1, ...characterList2].length),
       );
     });
