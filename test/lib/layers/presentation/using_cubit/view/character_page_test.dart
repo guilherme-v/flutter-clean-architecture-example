@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:rickmorty/layers/presentation/shared/character_card.dart';
+import 'package:rickmorty/layers/presentation/shared/character_list_item.dart';
 import 'package:rickmorty/layers/presentation/using_cubit/cubit/character_page_cubit.dart';
 import 'package:rickmorty/layers/presentation/using_cubit/view/character_page.dart';
 
@@ -39,13 +39,13 @@ void main() {
       expect(find.byType(CharacterView), findsOneWidget);
     });
 
-    testWidgets('renders a grid of Characters widgets', (tester) async {
+    testWidgets('renders a list of Characters widgets', (tester) async {
       const key = Key('character_page_list_key');
       when(() => cubit.state).thenReturn(
         CharacterPageState(
           currentPage: 2,
           status: CharacterPageStatus.success,
-          hasReachedEnd: false,
+          hasReachedEnd: true,
           characters: [...characterList1, ...characterList2],
         ),
       );
@@ -62,7 +62,7 @@ void main() {
 
       expect(find.byKey(key), findsOneWidget);
       final list = [...characterList1, ...characterList2];
-      expectLater(find.byType(CharacterCard), findsNWidgets(list.length));
+      expectLater(find.byType(CharacterListItem), findsNWidgets(list.length));
     });
   });
 }
