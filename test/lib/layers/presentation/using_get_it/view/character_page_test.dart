@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 import 'package:rickmorty/layers/presentation/shared/character_card.dart';
+import 'package:rickmorty/layers/presentation/shared/character_list_item.dart';
 import 'package:rickmorty/layers/presentation/using_get_it/controller/character_page_controller.dart';
 import 'package:rickmorty/layers/presentation/using_get_it/injector.dart';
 import 'package:rickmorty/layers/presentation/using_get_it/view/character_page.dart';
@@ -35,18 +36,19 @@ void main() {
       expect(find.byType(CharacterView), findsOneWidget);
     });
 
-    testWidgets('renders a grid of Characters widgets', (tester) async {
+    testWidgets('renders a list of Characters widgets', (tester) async {
       const key = Key('character_page_list_key');
 
       await tester.pumpApp(
         const CharacterPage(),
         getAllCharacters: getAllCharactersMock,
       );
+      getIt<CharacterPageController>().hasReachedEnd.value = true;
 
       await tester.pumpAndSettle();
       expect(find.byKey(key), findsOneWidget);
       expectLater(
-        find.byType(CharacterCard),
+        find.byType(CharacterListItem),
         findsNWidgets([...characterList1, ...characterList2].length),
       );
     });
