@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
+import 'package:rickmorty/layers/presentation/shared/character_list_item.dart';
+import 'package:rickmorty/layers/presentation/shared/character_list_item_header.dart';
+import 'package:rickmorty/layers/presentation/shared/character_list_item_loading.dart';
 import 'package:rickmorty/layers/presentation/using_mobx/controller/character_page_controller.dart';
-
-import '../../shared/character_card.dart';
 
 // -----------------------------------------------------------------------------
 // Page
@@ -79,40 +80,32 @@ class __ContentState extends State<_Content> {
     return Observer(
       builder: (context) {
         final list = widget.store.charactersList.toList();
-        final end = widget.store.hasReachedEnd;
+        final hasEnded = widget.store.hasReachedEnd;
 
-        final length = end
-            ? list.length
-            : list.length % 2 == 0
-                ? list.length + 1
-                : list.length + 2;
-
-        return Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-              child: GridView.builder(
-                key: const Key('character_page_list_key'),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // Adjust the number of columns here
-                  childAspectRatio: 1 / 1.36,
-                  crossAxisSpacing: 4,
-                ),
-                padding: const EdgeInsets.all(8),
-                controller: _scrollController,
-                itemCount: length,
-                itemBuilder: (context, index) {
-                  if (index < list.length) {
-                    final char = list[index];
-                    return CharacterCard(character: char);
-                  }
-                  return end
-                      ? const SizedBox()
-                      : const Center(child: CircularProgressIndicator());
-                },
-              ),
-            ),
-          ],
+        return Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          child: ListView.builder(
+            key: const ValueKey('character_page_list_key'),
+            controller: _scrollController,
+            itemCount: hasEnded ? list.length : list.length + 1,
+            itemBuilder: (context, index) {
+              if (index >= list.length) {
+                return !hasEnded
+                    ? const CharacterListItemLoading()
+                    : const SizedBox();
+              }
+              final item = list[index];
+              return index == 0
+                  ? Column(
+                      children: [
+                        const CharacterListItemHeader(
+                            titleText: 'All Characters'),
+                        CharacterListItem(item: item),
+                      ],
+                    )
+                  : CharacterListItem(item: item);
+            },
+          ),
         );
       },
     );
