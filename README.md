@@ -10,6 +10,12 @@
 - Keep code base easily extensible and adaptable
 - Make it possible to explore and replace different state management solutions without impacting the project (Currently, the options are: BLoC, Cubit, GetIt, MobX, Provider, and Riverpod)
 
+## Additional features
+
+- Material 3 theming
+- Widget and Unit Tests (good when comparing different state management libraries)
+- Infinite scrolling
+
 ## Tip
 
 Don't just apply the architecture blindly. Work wisely by using the appropriate levels of abstraction for each project. In the end, this architecture is just a collection of good ideas based on well-founded principles (like Separation of concerns). Seek to understand the problem that each architectural decision aims to solve, so you can determine when and how to apply it.
