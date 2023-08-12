@@ -37,11 +37,13 @@ class CharacterPageBloc extends Bloc<CharacterPageEvent, CharacterPageState> {
 
     final list = await _getAllCharacters(page: state.currentPage);
 
-    emit(state.copyWith(
-      status: CharacterPageStatus.success,
-      characters: List.of(state.characters)..addAll(list),
-      hasReachedEnd: list.isEmpty,
-      currentPage: state.currentPage + 1,
-    ));
+    emit(
+      state.copyWith(
+        status: CharacterPageStatus.success,
+        characters: List.of(state.characters)..addAll(list),
+        hasReachedEnd: list.isEmpty,
+        currentPage: state.currentPage + 1,
+      ),
+    );
   }
 }

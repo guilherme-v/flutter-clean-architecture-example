@@ -16,6 +16,7 @@
 - Widget and Unit Tests (good when comparing different state management libraries)
 - Infinite scrolling
 - Remote API call and Caching
+- Small set of customized static analysis and lint rules
 
 ## Tip
 

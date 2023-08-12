@@ -50,16 +50,24 @@ void main() {
           .thenReturn([]);
       when(() => mockApi.loadCharacters(page: page))
           .thenAnswer((_) async => apiCharacters);
-      when(() => mockLocalStorage.saveCharactersPage(
-          page: page, list: apiCharacters)).thenAnswer((_) async => true);
+      when(
+        () => mockLocalStorage.saveCharactersPage(
+          page: page,
+          list: apiCharacters,
+        ),
+      ).thenAnswer((_) async => true);
 
       final result = await characterRepository.getCharacters(page: page);
 
       expect(result, equals(apiCharacters));
       verify(() => mockLocalStorage.loadCharactersPage(page: page)).called(1);
       verify(() => mockApi.loadCharacters(page: page)).called(1);
-      verify(() => mockLocalStorage.saveCharactersPage(
-          page: page, list: apiCharacters)).called(1);
+      verify(
+        () => mockLocalStorage.saveCharactersPage(
+          page: page,
+          list: apiCharacters,
+        ),
+      ).called(1);
       verifyNoMoreInteractions(mockLocalStorage);
       verifyNoMoreInteractions(mockApi);
     });

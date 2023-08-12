@@ -20,11 +20,13 @@ class CharacterPageCubit extends Cubit<CharacterPageState> {
 
     final list = await _getAllCharacters(page: state.currentPage);
 
-    emit(state.copyWith(
-      status: CharacterPageStatus.success,
-      hasReachedEnd: list.isEmpty,
-      currentPage: state.currentPage + 1,
-      characters: List.of(state.characters)..addAll(list),
-    ));
+    emit(
+      state.copyWith(
+        status: CharacterPageStatus.success,
+        hasReachedEnd: list.isEmpty,
+        currentPage: state.currentPage + 1,
+        characters: List.of(state.characters)..addAll(list),
+      ),
+    );
   }
 }

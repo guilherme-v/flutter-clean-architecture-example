@@ -32,6 +32,7 @@ linter:
   # producing the lint.
   rules:
     always_use_package_imports: true
+    require_trailing_commas: true
     use_super_parameters: true
     prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule

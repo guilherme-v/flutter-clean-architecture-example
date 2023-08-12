@@ -99,7 +99,8 @@ class __ContentState extends State<_Content> {
                   ? Column(
                       children: [
                         const CharacterListItemHeader(
-                            titleText: 'All Characters'),
+                          titleText: 'All Characters',
+                        ),
                         CharacterListItem(item: item),
                       ],
                     )

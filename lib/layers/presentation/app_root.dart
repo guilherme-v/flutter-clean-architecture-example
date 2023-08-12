@@ -55,50 +55,52 @@ class _AppRootState extends State<AppRoot> {
       theme: theme.toThemeData(),
       darkTheme: theme.toThemeDataDark(),
       debugShowCheckedModeBanner: false,
-      home: Builder(builder: (context) {
-        final tt = Theme.of(context).textTheme;
-        final cs = Theme.of(context).colorScheme;
-        return Scaffold(
-          extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            title: Transform.translate(
-              offset: const Offset(10, 0),
-              child: Text(
-                'Rick & Morty\n(${getTitleToOption(_currentOption)})',
-                style: tt.headlineLarge!.copyWith(
-                  color: cs.onSurfaceVariant,
-                  fontWeight: FontWeight.bold,
+      home: Builder(
+        builder: (context) {
+          final tt = Theme.of(context).textTheme;
+          final cs = Theme.of(context).colorScheme;
+          return Scaffold(
+            extendBodyBehindAppBar: true,
+            appBar: AppBar(
+              title: Transform.translate(
+                offset: const Offset(10, 0),
+                child: Text(
+                  'Rick & Morty\n(${getTitleToOption(_currentOption)})',
+                  style: tt.headlineLarge!.copyWith(
+                    color: cs.onSurfaceVariant,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ).animate().fadeIn(delay: .8.seconds, duration: .7.seconds),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  final useLight = themeMode == ThemeMode.dark ? true : false;
-                  handleBrightnessChange(useLight);
-                },
-                icon: const Icon(Icons.light_mode),
-              ),
-              PopupMenuButton<StateManagementOptions>(
-                onSelected: (value) => setState(() {
-                  _currentOption = value;
-                }),
-                itemBuilder: (context) => [
-                  _menuEntry(StateManagementOptions.bloc, 'Bloc'),
-                  _menuEntry(StateManagementOptions.cubit, 'Cubit'),
-                  _menuEntry(StateManagementOptions.mobX, 'MobX'),
-                  _menuEntry(StateManagementOptions.getIt, 'GetIT'),
-                  _menuEntry(StateManagementOptions.provider, 'Provider'),
-                  _menuEntry(StateManagementOptions.riverpod, 'Riverpod'),
-                ],
-              ),
-            ],
-          ),
-          body: _getAppUsing(stateManagement: _currentOption)
-              .animate()
-              .fadeIn(delay: 1.2.seconds, duration: .7.seconds),
-        );
-      }),
+              ).animate().fadeIn(delay: .8.seconds, duration: .7.seconds),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    final useLight = themeMode == ThemeMode.dark ? true : false;
+                    handleBrightnessChange(useLight);
+                  },
+                  icon: const Icon(Icons.light_mode),
+                ),
+                PopupMenuButton<StateManagementOptions>(
+                  onSelected: (value) => setState(() {
+                    _currentOption = value;
+                  }),
+                  itemBuilder: (context) => [
+                    _menuEntry(StateManagementOptions.bloc, 'Bloc'),
+                    _menuEntry(StateManagementOptions.cubit, 'Cubit'),
+                    _menuEntry(StateManagementOptions.mobX, 'MobX'),
+                    _menuEntry(StateManagementOptions.getIt, 'GetIT'),
+                    _menuEntry(StateManagementOptions.provider, 'Provider'),
+                    _menuEntry(StateManagementOptions.riverpod, 'Riverpod'),
+                  ],
+                ),
+              ],
+            ),
+            body: _getAppUsing(stateManagement: _currentOption)
+                .animate()
+                .fadeIn(delay: 1.2.seconds, duration: .7.seconds),
+          );
+        },
+      ),
     );
   }
 
