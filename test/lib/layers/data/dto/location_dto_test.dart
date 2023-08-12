@@ -8,8 +8,8 @@ void main() {
 
     setUp(() {
       referenceDto = LocationDto(
-        name: "Rick Sanchez",
-        url: "https://example.com/character/1",
+        name: 'Rick Sanchez',
+        url: 'https://example.com/character/1',
       );
 
       referenceRawJson = referenceDto.toRawJson();

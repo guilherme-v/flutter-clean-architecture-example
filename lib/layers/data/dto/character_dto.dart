@@ -31,42 +31,42 @@ class CharacterDto extends Character {
   // Maps
   // ---------------------------------------------------------------------------
   factory CharacterDto.fromMap(Map<String, dynamic> json) => CharacterDto(
-        id: json["id"],
-        name: json["name"],
-        status: json["status"],
-        species: json["species"],
-        type: json["type"],
-        gender: json["gender"],
+        id: json['id'],
+        name: json['name'],
+        status: json['status'],
+        species: json['species'],
+        type: json['type'],
+        gender: json['gender'],
         origin:
-            json["origin"] == null ? null : LocationDto.fromMap(json["origin"]),
-        location: json["location"] == null
+            json['origin'] == null ? null : LocationDto.fromMap(json['origin']),
+        location: json['location'] == null
             ? null
-            : LocationDto.fromMap(json["location"]),
-        image: json["image"],
-        episode: json["episode"] == null
+            : LocationDto.fromMap(json['location']),
+        image: json['image'],
+        episode: json['episode'] == null
             ? []
-            : List<String>.from(json["episode"]!.map((x) => x)),
-        url: json["url"],
+            : List<String>.from(json['episode']!.map((x) => x)),
+        url: json['url'],
         created:
-            json["created"] == null ? null : DateTime.parse(json["created"]),
+            json['created'] == null ? null : DateTime.parse(json['created']),
       );
 
   Map<String, dynamic> toMap() => {
-        "id": id,
-        "name": name,
-        "status": status,
-        "species": species,
-        "type": type,
-        "gender": gender,
-        "origin":
+        'id': id,
+        'name': name,
+        'status': status,
+        'species': species,
+        'type': type,
+        'gender': gender,
+        'origin':
             origin != null ? LocationDto.fromLocation(origin!).toMap() : null,
-        "location": location != null
+        'location': location != null
             ? LocationDto.fromLocation(location!).toMap()
             : null,
-        "image": image,
-        "episode":
+        'image': image,
+        'episode':
             episode == null ? [] : List<dynamic>.from(episode!.map((x) => x)),
-        "url": url,
-        "created": created?.toIso8601String(),
+        'url': url,
+        'created': created?.toIso8601String(),
       };
 }

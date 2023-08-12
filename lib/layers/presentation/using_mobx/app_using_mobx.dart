@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 
-import 'view/character_page.dart';
+import 'package:rickmorty/layers/presentation/using_mobx/view/character_page.dart';
 
 class AppUsingMobX extends StatelessWidget {
   const AppUsingMobX({super.key, required this.getAllCharacters});

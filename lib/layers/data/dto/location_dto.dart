@@ -20,13 +20,13 @@ class LocationDto extends Location {
   // Maps
   // ---------------------------------------------------------------------------
   factory LocationDto.fromMap(Map<String, dynamic> json) => LocationDto(
-        name: json["name"],
-        url: json["url"],
+        name: json['name'],
+        url: json['url'],
       );
 
   Map<String, dynamic> toMap() => {
-        "name": name,
-        "url": url,
+        'name': name,
+        'url': url,
       };
 
   // ---------------------------------------------------------------------------

@@ -12,9 +12,10 @@
 
 ## Additional features
 
-- Material 3 theming
+- Material 3 theming support (Dark and Light)
 - Widget and Unit Tests (good when comparing different state management libraries)
 - Infinite scrolling
+- Remote API call and Caching
 
 ## Tip
 

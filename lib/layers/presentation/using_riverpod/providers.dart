@@ -7,7 +7,7 @@ import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 import 'package:rickmorty/layers/presentation/using_riverpod/notifier/character_state_notifier.dart';
 import 'package:rickmorty/main.dart';
 
-import 'notifier/character_page_state.dart';
+import 'package:rickmorty/layers/presentation/using_riverpod/notifier/character_page_state.dart';
 
 final apiProvider = Provider<Api>((ref) => ApiImpl());
 

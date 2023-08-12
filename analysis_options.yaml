@@ -9,6 +9,15 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  exclude: [ build/** ]
+  language:
+    # strict-casts: true # ensures that the type inference engine never implicitly casts from dynamic to a more specific type
+    strict-inference: true #  ensures that the type inference engine never chooses the dynamic type when it can’t determine a static type
+    strict-raw-types: true # ensures that the type inference engine never chooses the dynamic type when it can’t determine a static type due to omitted type arguments
+  errors:
+    unused_element: ignore # suppress issues with Widget({super.key})...
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
@@ -22,8 +31,10 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
+    always_use_package_imports: true
+    use_super_parameters: true
+    prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
