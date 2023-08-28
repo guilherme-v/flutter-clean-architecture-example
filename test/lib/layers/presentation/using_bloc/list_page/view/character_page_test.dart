@@ -4,11 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item.dart';
-import 'package:rickmorty/layers/presentation/using_bloc/bloc/character_page_bloc.dart';
-import 'package:rickmorty/layers/presentation/using_bloc/view/character_page.dart';
+import 'package:rickmorty/layers/presentation/using_bloc/list_page/bloc/character_page_bloc.dart';
+import 'package:rickmorty/layers/presentation/using_bloc/list_page/view/character_page.dart';
 
-import '../../../../../fixtures/fixtures.dart';
-import '../../helper/pump_app.dart';
+import '../../../../../../fixtures/fixtures.dart';
+import '../../../helper/pump_app.dart';
 
 class CharacterBlocMock extends MockBloc<CharacterPageEvent, CharacterPageState>
     implements CharacterPageBloc {}

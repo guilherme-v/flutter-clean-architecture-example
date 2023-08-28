@@ -1,5 +1,5 @@
 import 'package:rickmorty/layers/domain/entity/character.dart';
-import 'package:rickmorty/layers/presentation/using_bloc/bloc/character_page_bloc.dart';
+import 'package:rickmorty/layers/presentation/using_bloc/list_page/bloc/character_page_bloc.dart';
 import 'package:test/test.dart';
 
 void main() {

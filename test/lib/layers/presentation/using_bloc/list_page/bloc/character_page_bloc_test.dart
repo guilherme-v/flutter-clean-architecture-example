@@ -2,9 +2,9 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
-import 'package:rickmorty/layers/presentation/using_bloc/bloc/character_page_bloc.dart';
+import 'package:rickmorty/layers/presentation/using_bloc/list_page/bloc/character_page_bloc.dart';
 
-import '../../../../../fixtures/fixtures.dart';
+import '../../../../../../fixtures/fixtures.dart';
 
 class MockGetAllCharacters extends Mock implements GetAllCharacters {}
 
