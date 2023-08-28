@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/presentation/using_bloc/details_page/bloc/character_details_bloc.dart';
 
+// WIP !!
+
 // -----------------------------------------------------------------------------
 // Page
 // -----------------------------------------------------------------------------
