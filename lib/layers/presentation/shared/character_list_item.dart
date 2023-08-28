@@ -2,24 +2,34 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:rickmorty/layers/domain/entity/character.dart';
 
+typedef OnCharacterListItemTap = void Function(Character character);
+
 class CharacterListItem extends StatelessWidget {
-  const CharacterListItem({super.key, required this.item});
+  const CharacterListItem({
+    super.key,
+    required this.item,
+    this.onTap,
+  });
 
   final Character item;
+  final OnCharacterListItemTap? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      color: Colors.transparent,
-      child: SizedBox(
-        height: 124,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            _ItemPhoto(item: item),
-            _ItemDescription(item: item),
-          ],
+    return GestureDetector(
+      onTap: () => onTap?.call(item),
+      child: Card(
+        elevation: 0,
+        color: Colors.transparent,
+        child: SizedBox(
+          height: 124,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              _ItemPhoto(item: item),
+              _ItemDescription(item: item),
+            ],
+          ),
         ),
       ),
     );
