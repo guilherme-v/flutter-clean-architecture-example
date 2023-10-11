@@ -10,7 +10,7 @@ class AppUsingBloc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // - Provides UseCases down to the widget tree using Bloc's D.I widget
+    // - It provides UseCases down to the widget tree using Bloc's D.I widget
     // - Later we'll use it to instantiate each BLOC (if needed)
     // - BLOC and Cubits use the same set of widgets
     return RepositoryProvider.value(

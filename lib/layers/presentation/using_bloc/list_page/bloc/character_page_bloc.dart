@@ -30,7 +30,7 @@ class CharacterPageBloc extends Bloc<CharacterPageEvent, CharacterPageState> {
 
   final GetAllCharacters _getAllCharacters;
 
-  Future<void> _fetchNextPage(event, emit) async {
+  Future<void> _fetchNextPage(event, Emitter<CharacterPageState> emit) async {
     if (state.hasReachedEnd) return;
 
     emit(state.copyWith(status: CharacterPageStatus.loading));

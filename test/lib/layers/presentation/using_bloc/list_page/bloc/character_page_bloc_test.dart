@@ -25,7 +25,7 @@ void main() {
 
     group('.FetchNextPageEvent', () {
       blocTest<CharacterPageBloc, CharacterPageState>(
-        'emits loading->success',
+        'emits loading -> run UseCase -> emits success with a list',
         build: () => bloc,
         setUp: () {
           when(() => getAllCharacters(page: 1)).thenAnswer(
@@ -44,21 +44,23 @@ void main() {
             currentPage: 2,
           ),
         ],
+        verify: (_) {
+          verify(() => getAllCharacters.call(page: 1));
+          verifyNoMoreInteractions(getAllCharacters);
+        },
       );
 
       blocTest<CharacterPageBloc, CharacterPageState>(
-        'emits a state with hasReachedEnd true',
+        "emits a state with hasReachedEnd 'true' when there are no more items",
         build: () => bloc,
         setUp: () {
           when(() => getAllCharacters(page: 1)).thenAnswer(
             (_) async => const [],
           );
         },
+        skip: 1, // skip 'loading'
         act: (bloc) => bloc..add(const FetchNextPageEvent()),
         expect: () => [
-          const CharacterPageState(
-            status: CharacterPageStatus.loading,
-          ),
           const CharacterPageState(
             status: CharacterPageStatus.success,
             characters: [],
