@@ -4,11 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item.dart';
-import 'package:rickmorty/layers/presentation/using_cubit/cubit/character_page_cubit.dart';
-import 'package:rickmorty/layers/presentation/using_cubit/view/character_page.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/list_page/cubit/character_page_cubit.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/list_page/view/character_page.dart';
 
-import '../../../../../fixtures/fixtures.dart';
-import '../../helper/pump_app.dart';
+import '../../../../../../fixtures/fixtures.dart';
+import '../../../helper/pump_app.dart';
 
 class CharacterPageCubitMock extends MockCubit<CharacterPageState>
     implements CharacterPageCubit {}

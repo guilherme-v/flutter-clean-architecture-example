@@ -1,10 +1,10 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:rickmorty/layers/presentation/using_cubit/cubit/character_page_cubit.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/list_page/cubit/character_page_cubit.dart';
 
-import '../../../../../fixtures/fixtures.dart';
-import '../../helper/pump_app.dart';
+import '../../../../../../fixtures/fixtures.dart';
+import '../../../helper/pump_app.dart';
 
 void main() {
   group('CharacterPageCubit', () {
@@ -30,9 +30,9 @@ void main() {
       );
     });
 
-    group('.FetchNextPageEvent', () {
+    group('.fetchNextPage()', () {
       blocTest<CharacterPageCubit, CharacterPageState>(
-        'emits loading->success when FetchNextPageEvent is added and succeeds',
+        'emits loading -> runs UseCase -> emits success with a list',
         build: () => cubit,
         setUp: () {
           when(() => getAllCharactersMock(page: 1)).thenAnswer(
@@ -51,19 +51,21 @@ void main() {
             currentPage: 2,
           ),
         ],
+        verify: (_) {
+          verify(() => getAllCharactersMock.call(page: 1));
+          verifyNoMoreInteractions(getAllCharactersMock);
+        },
       );
 
       blocTest<CharacterPageCubit, CharacterPageState>(
-        'emits a state with hasReachedEnd true when no items are available anymore',
+        "emits a state with hasReachedEnd 'true' when there are no more items",
         build: () => cubit,
         setUp: () {
           when(() => getAllCharactersMock(page: 1)).thenAnswer((_) async => []);
         },
         act: (cubit) => cubit.fetchNextPage(),
+        skip: 1, // skip 'loading'
         expect: () => [
-          const CharacterPageState(
-            status: CharacterPageStatus.loading,
-          ),
           const CharacterPageState(
             status: CharacterPageStatus.success,
             characters: [],

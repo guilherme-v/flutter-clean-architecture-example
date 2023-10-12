@@ -1,5 +1,5 @@
 import 'package:rickmorty/layers/domain/entity/character.dart';
-import 'package:rickmorty/layers/presentation/using_cubit/cubit/character_page_cubit.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/list_page/cubit/character_page_cubit.dart';
 import 'package:test/test.dart';
 
 void main() {

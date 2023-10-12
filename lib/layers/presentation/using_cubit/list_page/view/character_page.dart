@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item_header.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item_loading.dart';
-import 'package:rickmorty/layers/presentation/using_cubit/cubit/character_page_cubit.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/details_page/view/character_details_page.dart';
+import 'package:rickmorty/layers/presentation/using_cubit/list_page/cubit/character_page_cubit.dart';
 
 // -----------------------------------------------------------------------------
 // Page
@@ -51,7 +53,7 @@ class _Content extends StatefulWidget {
 class __ContentState extends State<_Content> {
   final _scrollController = ScrollController();
 
-  CharacterPageCubit get pageBloc => context.read<CharacterPageCubit>();
+  CharacterPageCubit get pageCubit => context.read<CharacterPageCubit>();
 
   @override
   void initState() {
@@ -82,13 +84,18 @@ class __ContentState extends State<_Content> {
               ? Column(
                   children: [
                     const CharacterListItemHeader(titleText: 'All Characters'),
-                    CharacterListItem(item: item),
+                    CharacterListItem(item: item, onTap: _goToDetails),
                   ],
                 )
-              : CharacterListItem(item: item);
+              : CharacterListItem(item: item, onTap: _goToDetails);
         },
       ),
     );
+  }
+
+  void _goToDetails(Character character) {
+    final route = CharacterDetailsPage.route(character: character);
+    Navigator.of(context).push(route);
   }
 
   @override
@@ -101,7 +108,7 @@ class __ContentState extends State<_Content> {
 
   void _onScroll() {
     if (_isBottom) {
-      context.read<CharacterPageCubit>().fetchNextPage();
+      pageCubit.fetchNextPage();
     }
   }
 
