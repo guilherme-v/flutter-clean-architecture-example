@@ -109,13 +109,16 @@ class _ItemPhoto extends StatelessWidget {
       borderRadius: const BorderRadius.all(Radius.circular(12)),
       child: SizedBox(
         height: 122,
-        child: CachedNetworkImage(
-          height: 122,
-          width: 122,
-          imageUrl: item.image!,
-          fit: BoxFit.cover,
-          errorWidget: (ctx, url, err) => const Icon(Icons.error),
-          placeholder: (ctx, url) => const Icon(Icons.image),
+        child: Hero(
+          tag: item.id!,
+          child: CachedNetworkImage(
+            height: 122,
+            width: 122,
+            imageUrl: item.image!,
+            fit: BoxFit.cover,
+            errorWidget: (ctx, url, err) => const Icon(Icons.error),
+            placeholder: (ctx, url) => const Icon(Icons.image),
+          ),
         ),
       ),
     );
