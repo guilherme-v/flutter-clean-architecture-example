@@ -25,7 +25,7 @@ void main() {
 
     group('.FetchNextPageEvent', () {
       blocTest<CharacterPageBloc, CharacterPageState>(
-        'emits loading -> run UseCase -> emits success with a list',
+        'emits loading -> runs UseCase -> emits success with a list',
         build: () => bloc,
         setUp: () {
           when(() => getAllCharacters(page: 1)).thenAnswer(

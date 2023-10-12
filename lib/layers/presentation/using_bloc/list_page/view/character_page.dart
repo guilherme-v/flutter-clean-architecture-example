@@ -83,22 +83,16 @@ class __ContentState extends State<_Content> {
               ? Column(
                   children: [
                     const CharacterListItemHeader(titleText: 'All Characters'),
-                    CharacterListItem(
-                      item: item,
-                      onTap: (character) => _goToDetails(character, context),
-                    ),
+                    CharacterListItem(item: item, onTap: _goToDetails),
                   ],
                 )
-              : CharacterListItem(
-                  item: item,
-                  onTap: (character) => _goToDetails(character, context),
-                );
+              : CharacterListItem(item: item, onTap: _goToDetails);
         },
       ),
     );
   }
 
-  void _goToDetails(Character character, BuildContext context) {
+  void _goToDetails(Character character) {
     final route = CharacterDetailsPage.route(character: character);
     Navigator.of(context).push(route);
   }

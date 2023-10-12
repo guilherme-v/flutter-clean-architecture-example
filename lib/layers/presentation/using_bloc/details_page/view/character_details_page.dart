@@ -66,10 +66,13 @@ class _Content extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              CachedNetworkImage(
-                imageUrl: character.image!,
-                fit: BoxFit.cover,
-                height: 300,
+              Hero(
+                tag: character.id!,
+                child: CachedNetworkImage(
+                  imageUrl: character.image!,
+                  fit: BoxFit.cover,
+                  height: 300,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
