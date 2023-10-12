@@ -3,12 +3,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item.dart';
-import 'package:rickmorty/layers/presentation/using_get_it/controller/character_page_controller.dart';
+import 'package:rickmorty/layers/presentation/using_get_it/list_page/controller/character_page_controller.dart';
 import 'package:rickmorty/layers/presentation/using_get_it/injector.dart';
-import 'package:rickmorty/layers/presentation/using_get_it/view/character_page.dart';
+import 'package:rickmorty/layers/presentation/using_get_it/list_page/view/character_page.dart';
 
-import '../../../../../fixtures/fixtures.dart';
-import '../../helper/pump_app.dart';
+import '../../../../../../fixtures/fixtures.dart';
+import '../../../helper/pump_app.dart';
 
 void main() {
   group('CharacterPage', () {

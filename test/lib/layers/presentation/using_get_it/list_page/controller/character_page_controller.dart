@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:rickmorty/layers/presentation/using_get_it/controller/character_page_controller.dart';
+import 'package:rickmorty/layers/presentation/using_get_it/list_page/controller/character_page_controller.dart';
 
-import '../../../../../fixtures/fixtures.dart';
-import '../../helper/pump_app.dart';
+import '../../../../../../fixtures/fixtures.dart';
+import '../../../helper/pump_app.dart';
 
 void main() {
   late CharacterPageController controller;

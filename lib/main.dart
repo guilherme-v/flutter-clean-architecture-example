@@ -18,7 +18,7 @@ late SharedPreferences sharedPref;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharedPref = await SharedPreferences.getInstance();
-  initializeGetIt();
+  await initializeGetIt();
   Animate.restartOnHotReload = true;
 
   runApp(const AppRoot());

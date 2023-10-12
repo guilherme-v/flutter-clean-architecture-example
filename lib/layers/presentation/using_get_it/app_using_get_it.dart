@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rickmorty/layers/presentation/using_get_it/view/character_page.dart';
+import 'package:rickmorty/layers/presentation/using_get_it/list_page/view/character_page.dart';
 
 class AppUsingGetIt extends StatelessWidget {
   const AppUsingGetIt({super.key});
