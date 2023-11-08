@@ -62,7 +62,7 @@ class _Content extends StatelessWidget with GetItMixin {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Hero(
-            tag: character!.id!,
+            tag: character.id!,
             child: CachedNetworkImage(
               imageUrl: character.image!,
               fit: BoxFit.cover,
