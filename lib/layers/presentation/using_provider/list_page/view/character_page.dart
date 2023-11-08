@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item_header.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item_loading.dart';
+import 'package:rickmorty/layers/presentation/using_provider/details_page/view/character_details_page.dart';
 import 'package:rickmorty/layers/presentation/using_provider/list_page/change_notifier/character_page_change_notifier.dart';
 
 // -----------------------------------------------------------------------------
@@ -93,13 +95,18 @@ class __ContentState extends State<_Content> {
               ? Column(
                   children: [
                     const CharacterListItemHeader(titleText: 'All Characters'),
-                    CharacterListItem(item: item),
+                    CharacterListItem(item: item, onTap: _goToDetailsPage),
                   ],
                 )
-              : CharacterListItem(item: item);
+              : CharacterListItem(item: item, onTap: _goToDetailsPage);
         },
       ),
     );
+  }
+
+  void _goToDetailsPage(Character character) {
+    final route = CharacterDetailsPage.route(character: character);
+    Navigator.of(context).push(route);
   }
 
   @override
