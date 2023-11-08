@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item.dart';
-import 'package:rickmorty/layers/presentation/using_provider/view/character_page.dart';
+import 'package:rickmorty/layers/presentation/using_provider/list_page/view/character_page.dart';
 
 import '../../../../../fixtures/fixtures.dart';
 import '../../helper/pump_app.dart';
