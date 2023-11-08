@@ -1,18 +1,17 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:rickmorty/layers/presentation/using_mobx/controller/character_page_controller.dart';
+import 'package:rickmorty/layers/presentation/using_mobx/list_page/store/character_page_store.dart';
 
-import '../../../../../fixtures/fixtures.dart';
-import '../../helper/pump_app.dart';
+import '../../../../../../fixtures/fixtures.dart';
+import '../../../helper/pump_app.dart';
 
 void main() {
-  late CharacterPageController controller;
+  late CharacterPageStore store;
   late GetAllCharactersMock getAllCharactersMock;
 
   setUp(() {
     getAllCharactersMock = GetAllCharactersMock();
-    controller =
-        CharacterPageController(getAllCharacters: getAllCharactersMock);
+    store = CharacterPageStore(getAllCharacters: getAllCharactersMock);
   });
 
   test('fetchNextPage success', () async {
@@ -21,16 +20,16 @@ void main() {
     when(() => getAllCharactersMock.call(page: any(named: 'page')))
         .thenAnswer((_) async => mockCharacterList);
 
-    expect(controller.contentStatus, equals(CharacterPageStatus.initial));
+    expect(store.contentStatus, equals(CharacterPageStatus.initial));
 
     // Call the method under test
-    await controller.fetchNextPage();
+    await store.fetchNextPage();
 
     // Verify the interactions and expected values
-    expect(controller.contentStatus, equals(CharacterPageStatus.success));
-    expect(controller.currentPage, equals(2));
-    expect(controller.charactersList, equals(mockCharacterList));
-    expect(controller.hasReachedEnd, isFalse);
+    expect(store.contentStatus, equals(CharacterPageStatus.success));
+    expect(store.currentPage, equals(2));
+    expect(store.charactersList, equals(mockCharacterList));
+    expect(store.hasReachedEnd, isFalse);
   });
 
   test('fetchNextPage has reached end', () async {
@@ -41,15 +40,15 @@ void main() {
     // Set hasReachedEnd to true to simulate the end of the list
     // controller.hasReachedEnd = true;
 
-    expect(controller.contentStatus, equals(CharacterPageStatus.initial));
+    expect(store.contentStatus, equals(CharacterPageStatus.initial));
 
     // Call the method under test
-    await controller.fetchNextPage();
+    await store.fetchNextPage();
 
     // Verify the interactions and expected values
-    expect(controller.contentStatus, equals(CharacterPageStatus.success));
-    expect(controller.currentPage, equals(2));
-    expect(controller.charactersList, isEmpty);
-    expect(controller.hasReachedEnd, isTrue);
+    expect(store.contentStatus, equals(CharacterPageStatus.success));
+    expect(store.currentPage, equals(2));
+    expect(store.charactersList, isEmpty);
+    expect(store.hasReachedEnd, isTrue);
   });
 }

@@ -2,15 +2,14 @@ import 'package:mobx/mobx.dart';
 import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 
-part 'character_page_controller.g.dart';
+part 'character_page_store.g.dart';
 
 enum CharacterPageStatus { initial, loading, success, failed }
 
-class CharacterPageController = _CharacterPageController
-    with _$CharacterPageController;
+class CharacterPageStore = CharacterPageStoreBase with _$CharacterPageStore;
 
-abstract class _CharacterPageController with Store {
-  _CharacterPageController({
+abstract class CharacterPageStoreBase with Store {
+  CharacterPageStoreBase({
     required GetAllCharacters getAllCharacters,
   }) : _getAllCharacters = getAllCharacters;
 

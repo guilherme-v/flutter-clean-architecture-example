@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item_header.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item_loading.dart';
-import 'package:rickmorty/layers/presentation/using_mobx/controller/character_page_controller.dart';
+import 'package:rickmorty/layers/presentation/using_mobx/list_page/store/character_page_store.dart';
+
+import 'package:rickmorty/layers/presentation/using_mobx/details_page/view/character_details_page.dart';
 
 // -----------------------------------------------------------------------------
 // Page
@@ -15,8 +18,15 @@ class CharacterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //
+    // We're creating an Store here and passing it manually as dependency to
+    // constructors.
+    //
+    // A different option would be to use Provider to provide it down to the
+    // widget tree. This approach is also suggested by the MobX's documentation
+    //
     return CharacterView(
-      store: CharacterPageController(
+      store: CharacterPageStore(
         getAllCharacters: context.read<GetAllCharacters>(),
       ),
     );
@@ -29,7 +39,7 @@ class CharacterPage extends StatelessWidget {
 class CharacterView extends StatefulWidget {
   const CharacterView({super.key, required this.store});
 
-  final CharacterPageController store;
+  final CharacterPageStore store;
 
   @override
   State<CharacterView> createState() => _CharacterViewState();
@@ -60,7 +70,7 @@ class _CharacterViewState extends State<CharacterView> {
 class _Content extends StatefulWidget {
   const _Content({super.key, required this.store});
 
-  final CharacterPageController store;
+  final CharacterPageStore store;
 
   @override
   State<_Content> createState() => __ContentState();
@@ -101,15 +111,20 @@ class __ContentState extends State<_Content> {
                         const CharacterListItemHeader(
                           titleText: 'All Characters',
                         ),
-                        CharacterListItem(item: item),
+                        CharacterListItem(item: item, onTap: _goToDetails),
                       ],
                     )
-                  : CharacterListItem(item: item);
+                  : CharacterListItem(item: item, onTap: _goToDetails);
             },
           ),
         );
       },
     );
+  }
+
+  void _goToDetails(Character character) {
+    final route = CharacterDetailsPage.route(character: character);
+    Navigator.of(context).push(route);
   }
 
   @override

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'character_page_controller.dart';
+part of 'character_page_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,9 +8,9 @@ part of 'character_page_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$CharacterPageController on _CharacterPageController, Store {
+mixin _$CharacterPageStore on CharacterPageStoreBase, Store {
   late final _$_contentStatusAtom =
-      Atom(name: '_CharacterPageController._contentStatus', context: context);
+      Atom(name: 'CharacterPageStoreBase._contentStatus', context: context);
 
   CharacterPageStatus get contentStatus {
     _$_contentStatusAtom.reportRead();
@@ -28,7 +28,7 @@ mixin _$CharacterPageController on _CharacterPageController, Store {
   }
 
   late final _$_currentPageAtom =
-      Atom(name: '_CharacterPageController._currentPage', context: context);
+      Atom(name: 'CharacterPageStoreBase._currentPage', context: context);
 
   int get currentPage {
     _$_currentPageAtom.reportRead();
@@ -46,7 +46,7 @@ mixin _$CharacterPageController on _CharacterPageController, Store {
   }
 
   late final _$_hasReachedEndAtom =
-      Atom(name: '_CharacterPageController._hasReachedEnd', context: context);
+      Atom(name: 'CharacterPageStoreBase._hasReachedEnd', context: context);
 
   bool get hasReachedEnd {
     _$_hasReachedEndAtom.reportRead();
@@ -64,7 +64,7 @@ mixin _$CharacterPageController on _CharacterPageController, Store {
   }
 
   late final _$fetchNextPageAsyncAction =
-      AsyncAction('_CharacterPageController.fetchNextPage', context: context);
+      AsyncAction('CharacterPageStoreBase.fetchNextPage', context: context);
 
   @override
   Future<void> fetchNextPage() {
