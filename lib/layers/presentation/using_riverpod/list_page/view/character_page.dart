@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item_header.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item_loading.dart';
-import 'package:rickmorty/layers/presentation/using_riverpod/notifier/character_page_state.dart';
+import 'package:rickmorty/layers/presentation/using_riverpod/list_page/notifier/character_page_state.dart';
 import 'package:rickmorty/layers/presentation/using_riverpod/providers.dart';
 
 // -----------------------------------------------------------------------------
@@ -41,14 +40,13 @@ class _CharacterViewState extends ConsumerState<CharacterView> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(characterPageStateProvider);
+    final status = ref.watch(
+      characterPageStateProvider.select((p) => p.status),
+    );
 
-    return state.status == CharacterPageStatus.initial
+    return status == CharacterPageStatus.initial
         ? const Center(child: CircularProgressIndicator())
-        : _Content(
-            list: state.characters,
-            hasReachedEnd: state.hasReachedEnd,
-          );
+        : const _Content();
   }
 }
 
@@ -58,12 +56,7 @@ class _CharacterViewState extends ConsumerState<CharacterView> {
 class _Content extends ConsumerStatefulWidget {
   const _Content({
     super.key,
-    required this.list,
-    required this.hasReachedEnd,
   });
-
-  final List<Character> list;
-  final bool hasReachedEnd;
 
   @override
   ConsumerState<_Content> createState() => __ContentState();
@@ -80,30 +73,37 @@ class __ContentState extends ConsumerState<_Content> {
 
   @override
   Widget build(BuildContext context) {
-    final list = widget.list;
-    final hasEnded = widget.hasReachedEnd;
-
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16),
-      child: ListView.builder(
-        key: const ValueKey('character_page_list_key'),
-        controller: _scrollController,
-        itemCount: hasEnded ? list.length : list.length + 1,
-        itemBuilder: (context, index) {
-          if (index >= list.length) {
-            return !hasEnded
-                ? const CharacterListItemLoading()
-                : const SizedBox();
-          }
-          final item = list[index];
-          return index == 0
-              ? Column(
-                  children: [
-                    const CharacterListItemHeader(titleText: 'All Characters'),
-                    CharacterListItem(item: item),
-                  ],
-                )
-              : CharacterListItem(item: item);
+      child: Consumer(
+        builder: (BuildContext context, WidgetRef ref, Widget? child) {
+          final state = ref.watch(characterPageStateProvider);
+          final list = state.characters;
+          final hasEnded = state.hasReachedEnd;
+
+          return ListView.builder(
+            key: const ValueKey('character_page_list_key'),
+            controller: _scrollController,
+            itemCount: hasEnded ? list.length : list.length + 1,
+            itemBuilder: (context, index) {
+              if (index >= list.length) {
+                return !hasEnded
+                    ? const CharacterListItemLoading()
+                    : const SizedBox();
+              }
+              final item = list[index];
+              return index == 0
+                  ? Column(
+                      children: [
+                        const CharacterListItemHeader(
+                          titleText: 'All Characters',
+                        ),
+                        CharacterListItem(item: item),
+                      ],
+                    )
+                  : CharacterListItem(item: item);
+            },
+          );
         },
       ),
     );

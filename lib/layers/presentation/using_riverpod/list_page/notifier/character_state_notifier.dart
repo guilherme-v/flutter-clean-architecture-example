@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
-import 'package:rickmorty/layers/presentation/using_riverpod/notifier/character_page_state.dart';
+import 'package:rickmorty/layers/presentation/using_riverpod/list_page/notifier/character_page_state.dart';
+import 'package:rickmorty/layers/presentation/using_riverpod/providers.dart';
 
 class CharacterStateNotifier extends StateNotifier<CharacterPageState> {
   CharacterStateNotifier({

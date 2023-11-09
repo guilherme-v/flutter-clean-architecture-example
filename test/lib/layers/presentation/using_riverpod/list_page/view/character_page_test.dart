@@ -2,10 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rickmorty/layers/presentation/using_riverpod/providers.dart';
-import 'package:rickmorty/layers/presentation/using_riverpod/view/character_page.dart';
+import 'package:rickmorty/layers/presentation/using_riverpod/list_page/view/character_page.dart';
 
-import '../../../../../fixtures/fixtures.dart';
-import '../../helper/pump_app.dart';
+import '../../../../../../fixtures/fixtures.dart';
+import '../../../helper/pump_app.dart';
 
 void main() {
   group('CharacterPage', () {
