@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rickmorty/layers/domain/entity/character.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item_header.dart';
 import 'package:rickmorty/layers/presentation/shared/character_list_item_loading.dart';
+import 'package:rickmorty/layers/presentation/using_riverpod/details_page/view/details_page.dart';
 import 'package:rickmorty/layers/presentation/using_riverpod/list_page/notifier/character_page_state.dart';
-import 'package:rickmorty/layers/presentation/using_riverpod/providers.dart';
+import 'package:rickmorty/layers/presentation/using_riverpod/list_page/notifier/character_state_notifier.dart';
 
 // -----------------------------------------------------------------------------
 // Page
@@ -98,15 +100,20 @@ class __ContentState extends ConsumerState<_Content> {
                         const CharacterListItemHeader(
                           titleText: 'All Characters',
                         ),
-                        CharacterListItem(item: item),
+                        CharacterListItem(item: item, onTap: _goToDetailsPage),
                       ],
                     )
-                  : CharacterListItem(item: item);
+                  : CharacterListItem(item: item, onTap: _goToDetailsPage);
             },
           );
         },
       ),
     );
+  }
+
+  void _goToDetailsPage(Character character) {
+    final route = DetailsPage.route(character: character);
+    Navigator.of(context).push(route);
   }
 
   @override

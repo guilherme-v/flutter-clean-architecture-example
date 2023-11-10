@@ -3,6 +3,13 @@ import 'package:rickmorty/layers/domain/usecase/get_all_characters.dart';
 import 'package:rickmorty/layers/presentation/using_riverpod/list_page/notifier/character_page_state.dart';
 import 'package:rickmorty/layers/presentation/using_riverpod/providers.dart';
 
+final characterPageStateProvider =
+    StateNotifierProvider<CharacterStateNotifier, CharacterPageState>(
+  (ref) => CharacterStateNotifier(
+    getAllCharacters: ref.read(getAllCharactersProvider),
+  ),
+);
+
 class CharacterStateNotifier extends StateNotifier<CharacterPageState> {
   CharacterStateNotifier({
     required GetAllCharacters getAllCharacters,
