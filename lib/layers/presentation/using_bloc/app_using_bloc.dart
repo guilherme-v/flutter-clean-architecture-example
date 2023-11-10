@@ -10,11 +10,12 @@ class AppUsingBloc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // - It provides UseCases down to the widget tree using Bloc's D.I widget
-    // - Later we'll use it to instantiate each BLOC (if needed)
-    // - BLOC and Cubits use the same set of widgets
-    return RepositoryProvider.value(
-      value: getAllCharacters,
+    // 1 - Inject all uses cases on the top of the widget's tree
+    // 2 - Use them as BLOC/Cubit dependencies as needed
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider.value(value: getAllCharacters),
+      ],
       child: const AppView(),
     );
   }
