@@ -56,6 +56,7 @@ dependencies:
   shared_preferences: ^2.1.2
   stream_transform: ^2.1.0
   mobx: ^2.2.1
+  meta: ^1.9.1
 
 dev_dependencies:
   flutter_test:
