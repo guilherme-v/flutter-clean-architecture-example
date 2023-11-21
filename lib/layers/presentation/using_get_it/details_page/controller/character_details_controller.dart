@@ -4,6 +4,6 @@ class CharacterDetailsController {
   CharacterDetailsController();
 
   // No need to over complicate anything
-  // The controller just hold the 'character' that UI will show
+  // The controller just holds the 'character' that UI will show
   late Character character;
 }
