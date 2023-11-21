@@ -2,13 +2,12 @@
 
 ![app](./art/app.png?raw=true)
 
-
 ## Goals
 
 - Keep code clean
 - Keep code testable
 - Keep code base easily extensible and adaptable
-- Make it possible to explore and replace different state management solutions without impacting the project (Currently, the options are: BLoC, Cubit, GetIt, MobX, Provider, and Riverpod)
+- Ensure State Management Transparency: Design the codebase to treat the chosen state management solution as an implementation detail, enabling seamless exploration and later replacement with minimal project impact.
 
 ## Additional features
 
@@ -18,17 +17,28 @@
 - Remote API call and Caching
 - Small set of customized static analysis and lint rules
 
+## Exploration Summary
+
+An overview of the current state management libraries explored is presented below:
+
+| State Manager | Applied | Unit tests | Widget tests |
+|---------------|---------|:----------:|--------------|
+| Provider      | Yes     |    Yes     | In Progress  |
+| Riverpod      | Yes     |    Yes     | In Progress  |
+| Bloc          | Yes     |    Yes     | Yes          |
+| Cubit         | Yes     |    Yes     | Yes          |
+| GetIt         | Yes     |    Yes     | Yes          |
+| MobX          | Yes     |    Yes     | In Progress  |
+
 ## Tip
 
 Don't just apply the architecture blindly. Work wisely by using the appropriate levels of abstraction for each project. In the end, this architecture is just a collection of good ideas based on well-founded principles (like Separation of concerns). Seek to understand the problem that each architectural decision aims to solve, so you can determine when and how to apply it.
 
 **THINK** first, then **ACT**.
 
-
 ## A short description about "Clean Architecture"
 
 ![architecture](./art/arch_1.png?raw=true)
-
 
 There are two main points to understand about the architecture: it splits the project into different layers and conforms to the Dependency rule.
 
@@ -61,15 +71,13 @@ I recommend checking out [this link](https://blog.cleancoder.com/uncle-bob/2012/
 - The unidirectional data flow facilitates code comprehension
 - UI becomes an implementation detail - In fact, we could even reuse the Domain and Data layers to create things like CLIs
 
-
 ## Clean Architecture and how it's applied in this project
 
 The figure bellow represents the variation applied in this project:
 
 ![architecture](./art/arch_2.png?raw=true)
 
-In this case, we're only using three layers: Presentation, Domain and Data. 
-
+In this case, we're only using three layers: Presentation, Domain and Data.
 
 ### The presentation layer (UI)
 
@@ -79,7 +87,6 @@ Typically, the classes in this layer are responsible for:
 
 - Managing the application's state.
 - Handling UI aspects of an app, such as managing page navigation, displaying data, implementing internationalization, and ensuring proper UI updates.
-
 
 ### The domain layer
 
@@ -101,7 +108,6 @@ This layer serves as a boundary between our application and the external world. 
 - Data (de)serialization: It handles the conversion of data to and from JSON format, transforming it into Data Transfer Objects (DTOs) for standardized representation.
 - Caching management: It can incorporate caching mechanisms, optimizing performance by storing frequently accessed data for quicker retrieval.
 
-
 ### The DTOs, Entities and States
 
 As mentioned previously, this architecture emphasizes two fundamental principles: 'Separation of Concerns' and 'Single Responsibility.' And to uphold these principles, it is crucial to allow each layer to effectively handle data according to its specific needs. This can be achieved by utilizing classes with specialized characteristics that empower their usage within each layer.
@@ -113,6 +119,7 @@ DTOs are specifically designed for deserializing and serializing data when commu
 The specific usage of these classes may vary from project to project. The names assigned to them can differ, and there can even be additional types of classes, such as those specifically designed for database mapping. However, the underlying principle remains consistent: By utilizing these classes alongside mappers, we can provide each layer with a suitable data format and the flexibility to adapt to future changes.
 
 # References
+
 - [Joe Birch - Google GDE: Clean Architecture Course](https://caster.io/courses/android-clean-architecture)
 - [Reso Coder - Flutter TDD Clean Architecture](https://www.youtube.com/playlist?list=PLB6lc7nQ1n4iYGE_khpXRdJkJEp9WOech)
 - [Majid Hajian | Flutter Europe - Strategic Domain Driven Design to Flutter](https://youtu.be/lGv6KV5u75k)
