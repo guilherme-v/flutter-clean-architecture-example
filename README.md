@@ -1,4 +1,4 @@
-# Flutter - Clean Architecture proposal
+# Flutter - Clean Architecture with State Management comparison
 
 ![app](./art/app.png?raw=true)
 

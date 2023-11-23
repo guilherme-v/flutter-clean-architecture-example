@@ -2,8 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rickmorty/layers/presentation/using_provider/list_page/change_notifier/character_page_change_notifier.dart';
 
-import '../../../../../fixtures/fixtures.dart';
-import '../../helper/pump_app.dart';
+import '../../../../../../fixtures/fixtures.dart';
+import '../../../helper/pump_app.dart';
 
 void main() {
   group('CharacterChangeNotifier', () {
