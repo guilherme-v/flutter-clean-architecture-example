@@ -49,9 +49,9 @@ dependencies:
   flutter_riverpod: ^2.3.6
   get_it: ^7.6.0
   get_it_mixin: ^4.2.0
-  google_fonts: ^5.1.0
+  google_fonts: ^6.2.1
   intl: any
-  material_color_utilities: ^0.2.0
+  material_color_utilities: ^0.8.0
   provider: ^6.0.5
   shared_preferences: ^2.1.2
   stream_transform: ^2.1.0
@@ -67,10 +67,10 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.2
   test: ^1.24.1
-  mocktail: ^0.3.0
-  mockingjay: ^0.3.0
+  mocktail: ^1.0.3
+  mockingjay: ^0.5.0
   build_runner: ^2.3.3
   mobx_codegen: ^2.1.1
 
