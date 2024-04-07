@@ -25,12 +25,12 @@ An overview of the current state management libraries explored is presented belo
 
 | State Manager | Applied | Unit tests | Widget tests |
 |---------------|---------|:----------:|--------------|
-| Provider      | Yes     |    Yes     | Yes          |
+| Provider      | Yes     |    Yes     | In Progress  |
 | Riverpod      | Yes     |    Yes     | In Progress  |
 | Bloc          | Yes     |    Yes     | Yes          |
 | Cubit         | Yes     |    Yes     | Yes          |
 | GetIt         | Yes     |    Yes     | Yes          |
-| MobX          | Yes     |    Yes     | Yes          |
+| MobX          | Yes     |    Yes     | In Progress  |
 
 ## Tip
 
