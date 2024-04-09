@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rickmorty/layers/domain/entity/character.dart';
-import 'package:rickmorty/layers/presentation/using_provider/details_page/change_notifier/details_page_change_notifier.dart';
+import 'package:rickmorty/layers/presentation/using_provider/details_page/change_notifier/character_details_change_notifier.dart';
 
 // -----------------------------------------------------------------------------
 // Page
@@ -14,7 +14,7 @@ class CharacterDetailsPage extends StatelessWidget {
     return MaterialPageRoute(
       builder: (context) {
         return ChangeNotifierProvider(
-          create: (_) => DetailsPageChangeNotifier(character: character),
+          create: (_) => CharacterDetailsChangeNotifier(character: character),
           child: const CharacterDetailsPage(),
         );
       },
@@ -56,7 +56,7 @@ class _Content extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     final character = context.select(
-      (DetailsPageChangeNotifier cn) => cn.character,
+      (CharacterDetailsChangeNotifier cn) => cn.character,
     );
 
     return SingleChildScrollView(
@@ -89,9 +89,7 @@ class _Content extends StatelessWidget {
                   Text(
                     'Status: ${character.isAlive ? 'ALIVE!' : 'DEAD!!'}',
                     style: textTheme.titleMedium!.copyWith(
-                      color: character.isAlive
-                          ? Colors.lightGreen
-                          : Colors.redAccent,
+                      color: character.isAlive ? Colors.lightGreen : Colors.redAccent,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -152,32 +150,47 @@ class _Content extends StatelessWidget {
               itemCount: character.episode?.length ?? 0,
               itemBuilder: (context, index) {
                 final ep = character.episode![index];
-                final name = ep.split('/').last;
-                return Padding(
-                  padding: const EdgeInsets.only(left: 12.0, top: 8),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(16),
-                      ),
-                      color: colorScheme.surfaceVariant,
-                    ),
-                    height: 80,
-                    width: 80,
-                    child: Center(
-                      child: Text(
-                        name,
-                        style: textTheme.bodyLarge!.copyWith(
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
+                return EpisodeItem(ep: ep);
               },
             ),
-          )
+          ),
         ],
+      ),
+    );
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Episode
+// -----------------------------------------------------------------------------
+class EpisodeItem extends StatelessWidget {
+  const EpisodeItem({super.key, required this.ep});
+
+  final String ep;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    final name = ep.split('/').last;
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 12.0, top: 8),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
+          color: colorScheme.surfaceVariant,
+        ),
+        height: 80,
+        width: 80,
+        child: Center(
+          child: Text(
+            name,
+            style: textTheme.bodyLarge!.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
+          ),
+        ),
       ),
     );
   }
