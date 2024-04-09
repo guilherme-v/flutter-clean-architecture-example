@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:rickmorty/layers/domain/entity/character.dart';
 
-class DetailsPageChangeNotifier extends ChangeNotifier {
-  DetailsPageChangeNotifier({required this.character});
+class CharacterDetailsChangeNotifier extends ChangeNotifier {
+  CharacterDetailsChangeNotifier({required this.character});
 
   final Character character;
 }
