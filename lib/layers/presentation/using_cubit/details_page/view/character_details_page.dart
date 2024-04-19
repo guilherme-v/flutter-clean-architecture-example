@@ -154,7 +154,7 @@ class _Content extends StatelessWidget {
                     return EpisodeItem(ep: ep);
                   },
                 ),
-              )
+              ),
             ],
           );
         },

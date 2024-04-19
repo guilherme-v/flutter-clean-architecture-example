@@ -25,7 +25,8 @@ void main() {
       await tester.pumpApp(
         ProviderScope(
           overrides: [
-            getAllCharactersProvider.overrideWith((ref) => getAllCharactersMock)
+            getAllCharactersProvider
+                .overrideWith((ref) => getAllCharactersMock),
           ],
           child: const CharacterPage(),
         ),
