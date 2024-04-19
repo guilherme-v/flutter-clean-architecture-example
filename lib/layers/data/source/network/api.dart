@@ -13,11 +13,10 @@ class ApiImpl implements Api {
   @override
   Future<List<CharacterDto>> loadCharacters({int page = 0}) async {
     try {
-      final Response<Map<String, List<Map<String, CharacterDto>>>> response =
-          await dio
-              .get('https://rickandmortyapi.com/api/character/?page=$page');
-
-      final l = response.data!['results']!
+      final Response<Map<String, dynamic>> response = await dio
+          .get('https://rickandmortyapi.com/api/character/?page=$page');
+      print('page');
+      final l = (response.data!['results'] as List<dynamic>)
           .map((e) => CharacterDto.fromMap(e))
           .toList();
       return l;
@@ -33,8 +32,7 @@ class ApiImpl implements Api {
         if (e.response?.statusCode == 404) return [];
       } else {
         // Something happened in setting up or sending the request that triggered an Error
-        print(e.requestOptions);
-        print(e.message);
+        print(e);
       }
     }
 
