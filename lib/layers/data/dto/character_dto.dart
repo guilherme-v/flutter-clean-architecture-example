@@ -45,7 +45,7 @@ class CharacterDto extends Character {
         image: json['image'],
         episode: json['episode'] == null
             ? []
-            : List<String>.from(json['episode']!.map((x) => x)),
+            : List<String>.from(json['episode']!.map((dynamic x) => x)),
         url: json['url'],
         created:
             json['created'] == null ? null : DateTime.parse(json['created']),
@@ -64,8 +64,9 @@ class CharacterDto extends Character {
             ? LocationDto.fromLocation(location!).toMap()
             : null,
         'image': image,
-        'episode':
-            episode == null ? [] : List<dynamic>.from(episode!.map((x) => x)),
+        'episode': episode == null
+            ? [null]
+            : List<dynamic>.from(episode!.map((x) => x)),
         'url': url,
         'created': created?.toIso8601String(),
       };

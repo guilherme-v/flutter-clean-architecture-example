@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:dio/dio.dart';
 import 'package:rickmorty/layers/data/dto/character_dto.dart';
 
@@ -11,15 +13,14 @@ class ApiImpl implements Api {
   @override
   Future<List<CharacterDto>> loadCharacters({int page = 0}) async {
     try {
-      Response response;
-      response = await dio
+      final Response<Map<String, dynamic>> response = await dio
           .get('https://rickandmortyapi.com/api/character/?page=$page');
-
-      final l = (response.data['results'] as List)
+      print('page');
+      final l = (response.data!['results'] as List<dynamic>)
           .map((e) => CharacterDto.fromMap(e))
           .toList();
       return l;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx and is also not 304.
       if (e.response != null) {
@@ -31,8 +32,7 @@ class ApiImpl implements Api {
         if (e.response?.statusCode == 404) return [];
       } else {
         // Something happened in setting up or sending the request that triggered an Error
-        print(e.requestOptions);
-        print(e.message);
+        print(e);
       }
     }
 

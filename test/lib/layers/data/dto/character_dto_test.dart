@@ -20,7 +20,7 @@ void main() {
         image: 'https://example.com/rick.png',
         episode: [
           'https://example.com/episode1',
-          'https://example.com/episode2'
+          'https://example.com/episode2',
         ],
         url: 'https://example.com/character/1',
         created: DateTime.parse('2022-01-01T12:00:00Z'),

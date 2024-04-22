@@ -153,7 +153,7 @@ class _Content extends StatelessWidget with GetItMixin {
                 return EpisodeItem(ep: ep);
               },
             ),
-          )
+          ),
         ],
       ),
     );
