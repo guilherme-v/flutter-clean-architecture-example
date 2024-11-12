@@ -4,28 +4,6 @@
 
 ![app](./art/app.png?raw=true)
 
-## 👀 Seeking New Opportunities - Open to Work 👋
-
-I am currently seeking new career opportunities as a mobile developer. If you know of any roles that align with my skills and experience, I would love to hear from you!
-
-### About Me
-
-- 15 years experience as a programmer
-- Focus on Android and Flutter, but also worked with iOS, Ruby on Rails, Hotwire, .NETCore, NestJS, Spring, Phoenix...
-
-### Contact Information
-
-- **Email:** silva.guilherme09@gmail.com
-- **LinkedIn:** https://www.linkedin.com/in/guilherme-silva-aa042a27/
-
-### Resume
-
-Feel free to check out my [resume/CV](https://github.com/guilherme-v/cv/blob/main/resume.pdf) for more details about my professional background and qualifications.
-
-Thank you for considering me for any suitable positions!
-
----
-
 ## Goals
 
 - Keep code clean
